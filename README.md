@@ -1,11 +1,21 @@
-# My Personal Project
+![BIO](https://media.github.students.cs.ubc.ca/user/9769/files/f9c50700-cd48-11ea-93b4-e8d320c9a598)
 
-## A subtitle
+## Project Proposal
+Biosync is a healthcare management application that allows medical professionals to efficiently view <br> 
+and update patient medical records, as well as track patient progress. 
 
-A *bulleted* list:
-- item 1
-- item 2
-- item 3
+Biosync aims to provide support for giving patients timely services and care, and given the limited amount of medical 
+resources <br> and psychiatrists available, it can especially be useful in mental health care. Mental health treatment 
+is a prolonged and <br> arduous process that requires multiple patient-psychiatrist sessions and 
+trials to identify effective medications and therapies. <br> As such, Biosync can, for example, be integrated into more 
+sophisticated mental health related applications such as MindTalk, <br> a research project that my group is 
+developing, which aims to objectivize and expedite depression diagnosis and treatment.
 
-An example of text with **bold** and *italic* fonts.  Note that the IntelliJ markdown previewer doesn't seem to render 
-the bold and italic fonts correctly but they will appear correctly on GitHub.
+
+## User Stories
+- As a user, I want to be able to add a patient to a list of patients
+- As a user, I want to be able to view the list of patients 
+- As a user, I want to be able to select a patient from a list of patients and view their records
+- As a user, I want to be able to add diagnosis a patient’s records
+- As a user, I want to be able to modify (add/remove) a patient’s treatment and medication
+
