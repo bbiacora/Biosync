@@ -14,8 +14,9 @@ developing, which aims to objectivize and expedite depression diagnosis and trea
 
 ## User Stories
 - As a user, I want to be able to add a patient to a list of patients
+- As a user, I want to be able to remove a patient from a list of patients
 - As a user, I want to be able to view the list of patients 
 - As a user, I want to be able to select a patient from a list of patients and view their records
-- As a user, I want to be able to add diagnosis a patient’s records
-- As a user, I want to be able to modify (add/remove) a patient’s treatment and medication
+- As a user, I want to be able to add diagnosis to a patient’s records
+- As a user, I want to be able to modify (add/remove) a patient’s medication
 
