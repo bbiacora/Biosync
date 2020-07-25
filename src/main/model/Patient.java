@@ -23,20 +23,22 @@ public class Patient {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds a diagnosis to a list of diagnoses
+    // EFFECTS: adds a diagnosis to patient's list of diagnoses
     public void addDiagnosis(String diagnosis) {
-        diagnoses.add(diagnosis);
+        this.diagnoses.add(diagnosis);
     }
 
+    // TODO: removeDiagnosis() method if there's time
+
     // MODIFIES: this
-    // EFFECTS: adds a medication to a list of medications
+    // EFFECTS: adds a medication to patient's list of medications
     public void addMedication(String medication) {
         medications.add(medication);
     }
 
     // REQUIRES: medications is not null
     // MODIFIES: this
-    // EFFECTS: searches for a medication in medications and removes it
+    // EFFECTS: searches for a medication in medications and removes it if found
     public void removeMedication(String medication) {
         for (String m : medications) {
             if (m.equalsIgnoreCase(medication)) {
@@ -45,23 +47,27 @@ public class Patient {
         }
     }
 
-    // GETTERS
+    // EFFECTS: returns patient's personal health number
     public String getPersonalHealthNumber() {
         return personalHealthNumber;
     }
 
+    // EFFECTS: returns patient's first name
     public String getFirstName() {
         return firstName;
     }
 
+    // EFFECTS: returns patient's last name
     public String getLastName() {
         return lastName;
     }
 
+    // EFFECTS: returns patient's a list of diagnoses
     public ArrayList<String> getDiagnoses() {
         return diagnoses;
     }
 
+    // EFFECTS: returns patient's a list of medications
     public ArrayList<String> getMedications() {
         return medications;
     }
