@@ -20,6 +20,15 @@ class PatientTest {
     }
 
     @Test
+    public void testRemoveDiagnosis() {
+        patient.addDiagnosis("Hypertension");
+        patient.addDiagnosis("Asthma");
+        assertTrue(patient.getDiagnoses().contains("Hypertension"));
+        patient.removeDiagnosis("Hypertension");
+        assertFalse(patient.getMedications().contains("Hypertension"));
+    }
+
+    @Test
     public void testAddMedication() {
         patient.addMedication("Bumetanide");
         assertTrue(patient.getMedications().contains("Bumetanide"));
