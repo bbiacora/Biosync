@@ -15,63 +15,67 @@ class PatientsTest {
 
     @Test
     public void testAddPatientNumberNotRegistered() {
-        assertTrue(patients.addPatient("0123456789", "John", "Smith"));
+        assertTrue(patients.addPatient("01234", "John", "Smith"));
     }
 
     @Test
     public void testAddPatientNumberAlreadyRegistered() {
-        patients.addPatient("0123456789", "John", "Smith");
-        assertFalse(patients.addPatient("0123456789", "Jane", "Doe"));
+        patients.addPatient("01234", "John", "Smith");
+        assertFalse(patients.addPatient("01234", "Jane", "Doe"));
     }
 
     @Test
-    public void testRemovePatientInPatients() {
-        String patientKey = "1111222333";
-        patients.addPatient("0123456789", "John", "Smith");
-        patients.addPatient("9876543210", "Jane", "Doe");
-        patients.addPatient("1111222333", "James", "Johnson");
-        assertTrue(patients.removePatient(patientKey));
-    }
-
-    @Test
-    public void testRemovePatientNotInPatients() {
-        String patientKey = "1111222333";
-        patients.addPatient("0123456789", "John", "Smith");
-        patients.addPatient("9876543210", "Jane", "Doe");
-        assertFalse(patients.removePatient(patientKey));
-
+    public void testRemovePatient() {
+        String patientKey = "11112";
+        patients.addPatient("01234", "John", "Smith");
+        patients.addPatient("987650", "Jane", "Doe");
+        patients.addPatient("11112", "James", "Johnson");
+        assertTrue(patients.containsPatient(patientKey));
+        patients.removePatient("11112");
+        assertFalse(patients.containsPatient(patientKey));
     }
 
     @Test
     public void testGetPatientInPatients() {
-        String patientKey = "0123456789";
-        patients.addPatient("0123456789", "John", "Smith");
-        patients.addPatient("1111222333", "James", "Johnson");
+        String patientKey = "012345";
+        patients.addPatient("012345", "John", "Smith");
+        patients.addPatient("11112", "James", "Johnson");
         assertTrue(patients.getPatient(patientKey).getFirstName().equals("John") &&
                 patients.getPatient(patientKey).getLastName().equals("Smith"));
     }
 
     @Test
     public void testGetPatientNotInPatients() {
-        String patientKey = "1111222333";
-        patients.addPatient("0123456789", "John", "Smith");
+        String patientKey = "11112";
+        patients.addPatient("01234", "John", "Smith");
         assertEquals(patients.getPatient(patientKey), null);
     }
 
     @Test
+    public void testGetPatientKeySet() {
+        assertFalse(patients.getPatientKeySet().contains("01234"));
+        assertFalse(patients.getPatientKeySet().contains("98765"));
+        patients.addPatient("01234", "John", "Smith");
+        patients.addPatient("98765", "Jane", "Doe");
+        assertTrue(patients.getPatientKeySet().contains("01234"));
+        assertTrue(patients.getPatientKeySet().contains("98765"));
+    }
+
+    @Test
     public void testContainsPatientInPatients() {
-        String patientKey = "1111222333";
-        patients.addPatient("0123456789", "John", "Smith");
-        patients.addPatient("9876543210", "Jane", "Doe");
-        patients.addPatient("1111222333", "James", "Johnson");
+        String patientKey = "11112";
+        assertFalse(patients.containsPatient(patientKey));
+        patients.addPatient("01234", "John", "Smith");
+        patients.addPatient("98765", "Jane", "Doe");
+        patients.addPatient("11112", "James", "Johnson");
         assertTrue(patients.containsPatient(patientKey));
     }
 
     @Test
     public void testContainsPatientNotInPatients() {
-        String patientKey = "1111222333";
-        patients.addPatient("0123456789", "John", "Smith");
-        patients.addPatient("9876543210", "Jane", "Doe");
+        String patientKey = "11112";
+        patients.addPatient("01234", "John", "Smith");
+        patients.addPatient("98765", "Jane", "Doe");
         assertFalse(patients.containsPatient(patientKey));
     }
 

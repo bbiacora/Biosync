@@ -10,7 +10,7 @@ class PatientTest {
 
     @BeforeEach
     public void setUp() {
-        patient = new Patient("0123456789", "John", "Smith");
+        patient = new Patient("01234", "John", "Smith");
     }
 
     @Test
@@ -37,7 +37,7 @@ class PatientTest {
 
     @Test
     public void testGetPersonalHealthNumber() {
-        assertEquals(patient.getPersonalHealthNumber(), "0123456789");
+        assertEquals(patient.getPersonalHealthNumber(), "01234");
     }
 
     @Test

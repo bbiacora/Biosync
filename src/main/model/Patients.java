@@ -1,6 +1,7 @@
 package model;
 
 import java.util.HashMap;
+import java.util.Set;
 
 // Represents a map of patients to be handled by Biosync
 public class Patients {
@@ -12,7 +13,8 @@ public class Patients {
     }
 
     // MODIFIES: this
-    // TODO EFFECTS: creates a new patient and adds it to patients if personal health number is valid
+    // EFFECTS: creates a new patient and adds it to patients if personal health number is valid
+    // TODO EXCEPTION
     public boolean addPatient(String personalHealthNumber, String firstName, String lastName) {
         if (!(this.containsPatient(personalHealthNumber))) {
             Patient patient = new Patient(personalHealthNumber, firstName, lastName);
@@ -23,15 +25,10 @@ public class Patients {
         }
     }
 
-    // REQUIRES: patients is not null
     // MODIFIES: this
-    // TODO EFFECTS: removes a patient in patients with the corresponding personal health number
-    public boolean removePatient(String personalHealthNumber) {
-        if (containsPatient(personalHealthNumber)) {
-            patients.remove(personalHealthNumber);
-            return true;
-        }
-        return false;
+    // EFFECTS: removes a patient in patients with the corresponding personal health number
+    public void removePatient(String personalHealthNumber) {
+        patients.remove(personalHealthNumber);
     }
 
     // EFFECTS: returns a patient, if patient is in patients
@@ -42,6 +39,10 @@ public class Patients {
         } else {
             return null;
         }
+    }
+
+    public Set<String> getPatientKeySet() {
+        return patients.keySet();
     }
 
     // EFFECTS: returns true if there is a patient in patients under

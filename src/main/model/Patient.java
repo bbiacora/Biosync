@@ -11,7 +11,6 @@ public class Patient {
     private ArrayList<String> diagnoses;
     private ArrayList<String> medications;
 
-    // REQUIRES: personal health number length = 10
     // EFFECTS: sets patients's personal health number, first name and last name;
     //          initializes two empty lists for patient's diagnoses and medications
     public Patient(String personalHealthNumber, String firstName, String lastName) {
