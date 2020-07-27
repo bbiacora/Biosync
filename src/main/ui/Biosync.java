@@ -62,6 +62,7 @@ public class Biosync {
     }
 
     // EFFECTS: prints name of all patient in patients along with their corresponding personal health number
+    // Reference: https://stackoverflow.com/questions/46041997/print-list-of-values-from-hashmap
     private void viewPatients() {
         if (patients.getPatientKeySet().size() == 0) {
             System.err.println("There are no patients registered in the system.\n");
@@ -210,6 +211,7 @@ public class Biosync {
 
     // EFFECTS: keeps prompting user for valid personal health number (length = 5 and numeric)
     //          returns a valid personal health number
+    // Reference: https://stackoverflow.com/questions/19715303/regex-that-accepts-only-numbers-0-9-and-no-characters
     private String validate(String personalHealthNumber) {
         boolean keepGoing = true;
 
