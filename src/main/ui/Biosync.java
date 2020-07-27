@@ -72,7 +72,7 @@ public class Biosync {
                 String personalHealthNumber = patients.getPatient(key).getPersonalHealthNumber();
                 String firstName = patients.getPatient(key).getFirstName();
                 String lastName = patients.getPatient(key).getLastName();
-                System.out.println("\t\t" + personalHealthNumber + "\t\t\t" + " | \t " + lastName + ", " + firstName);
+                System.out.println("\t\t" + personalHealthNumber + "\t\t\t" + " | \t " + firstName + " " + lastName);
             }
             selectPatient();
         }
@@ -80,7 +80,7 @@ public class Biosync {
 
     // MODIFIES: this
     // EFFECTS: prompts user to enter patient's personal health number and first and last name;
-    //          adds patient to patients if no patient is mapped to personal health number in patients;
+    //          adds patient to patients if personal health number is not yet mapped to an existing patient;
     //          prints a confirmation that the patient has been added;
     private void addPatient() {
         System.out.println("Patient's 5-digit Personal Health Number:");
@@ -88,22 +88,19 @@ public class Biosync {
         personalHealthNumber = validate(personalHealthNumber);
 
         if (patients.containsPatient(personalHealthNumber)) {
-            System.err.println("Patient already resgistered in the system.");
+            System.err.println("Patient already resgistered in the system.\n");
         } else {
             System.out.println("Patient's first name: ");
             String firstName = input.nextLine();
-
             System.out.println("Patient's Last name: ");
             String lastName = input.nextLine();
-
             patients.addPatient(personalHealthNumber, firstName, lastName);
             System.out.println("\n" + firstName + " " + lastName + " has been added to the system.\n");
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: prompts user for personal health number, if valid and
-    //          if patient exisits, removes corresponding patient,
+    // EFFECTS: if patient exists, removes corresponding patient in patients,
     //          otherwise prompts user to enter a new personal health number
     private void removePatient() {
         if (patients.getPatientKeySet().size() == 0) {
@@ -114,9 +111,8 @@ public class Biosync {
             personalHealthNumber = validate(personalHealthNumber);
             if (!patients.containsPatient(personalHealthNumber)) {
                 System.err.println("Patient not found.\n");
-                removePatient();
             } else {
-                if (confirmRemoval()) {
+                if (confirmRemoval(personalHealthNumber)) {
                     System.out.println("\n" + patients.getPatient(personalHealthNumber).getFirstName() + " " + patients
                             .getPatient(personalHealthNumber).getLastName() + " has been removed from the system.\n");
                     patients.removePatient(personalHealthNumber);
@@ -125,17 +121,36 @@ public class Biosync {
         }
     }
 
+    // EFFECTS: prompts user for confirmation response ("y" or "n")
+    //          returns true if user input = "y" and false if user input = "n"
+    private boolean confirmRemoval(String personalHealthNumber) {
+        System.err.println("Are you sure? You will lose all of " + patients.getPatient(personalHealthNumber)
+                .getFirstName() + " " + patients.getPatient(personalHealthNumber)
+                .getLastName() + "'s information!");
+        System.err.println("Enter 'y' to confirm or 'n' to cancel");
+        String response = input.nextLine().toLowerCase();
+
+        if (!(response.equals("y") || response.equals("n"))) {
+            System.err.println("Invalid input. Please try again.\n");
+            return false;
+        } else if (response.equals("y")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // MODIFIES: this
     // EFFECTS: prompts user to select a patient;
     //          if patient exists, prints patient records;
     //          prompts user to modify patient's records
     private void selectPatient() {
-        System.out.println("\nEnter patient's Personal Health Number to view their records");
+        System.out.println("\nEnter patient's personal health number to view their records");
         String personalHealthNumber = input.nextLine();
         personalHealthNumber = validate(personalHealthNumber);
 
         if (!patients.containsPatient(personalHealthNumber)) {
-            System.out.println("Patient not found.\n");
+            System.err.println("Patient not found.\n");
         } else {
             printPatientRecord(personalHealthNumber);
             modifyPatientRecord(personalHealthNumber);
@@ -158,19 +173,19 @@ public class Biosync {
     private void processPatientMenu(String command, String personalHealthNumber) {
         if (command.equals("d")) {
             System.out.println("Enter diagnosis: ");
-            command = input.nextLine();
+            command = input.nextLine().toLowerCase();
             patients.getPatient(personalHealthNumber).addDiagnosis(command);
 //        } else if (command.equals("v")) {
 //            System.out.println("Enter diagnosis to be removed: ");
-//            command = input.nextLine();
+//            command = input.nextLine().toLowerCase();
 //            patients.getPatient(personalHealthNumber).removeDiagnosis(command);
         } else {
             System.out.println("Enter medication: ");
-            command = input.nextLine();
+            command = input.nextLine().toLowerCase();
             patients.getPatient(personalHealthNumber).addMedication(command);
 //        } else {
 //            System.out.println("Enter medication to be removed: ");
-//            String response = input.nextLine();
+//            String response = input.nextLine().toLowerCase();
 //            patients.getPatient(personalHealthNumber).removeDiagnosis(response);
         }
     }
@@ -179,7 +194,6 @@ public class Biosync {
     // EFFECTS: adds a diagnosis or a medication to patient's records
     private void modifyPatientRecord(String personalHealthNumber) {
         String command = "";
-
         while (!(command.equals("d") || command.equals("m"))) {
             displayPatientMenu();
             command = input.nextLine();
@@ -189,19 +203,19 @@ public class Biosync {
 
     // EFFECTS: prints patient records
     private void printPatientRecord(String personalHealthNumber) {
-        System.out.println("Personal Health Number: " + personalHealthNumber);
+        System.out.println("\nPersonal Health Number: " + personalHealthNumber);
         System.out.println("Name: " + patients.getPatient(personalHealthNumber)
                 .getFirstName() + patients.getPatient(personalHealthNumber).getLastName());
         System.out.println("Diagnoses: ");
         formatRecords(patients.getPatient(personalHealthNumber).getDiagnoses());
-        System.out.println("\nMedications: ");
+        System.out.println("Medications: ");
         formatRecords(patients.getPatient(personalHealthNumber).getMedications());
     }
 
     // EFFECTS: formats strings from a list for user readability and prints it
     private void formatRecords(ArrayList<String> list) {
-        if (list == null) {
-            System.out.println("-");
+        if (list.size() == 0) {
+            System.out.println(" - ");
         } else {
             for (int i = 0; i < list.size(); i++) {
                 System.out.println(" - " + list.get(i));
@@ -224,23 +238,6 @@ public class Biosync {
             }
         }
         return personalHealthNumber;
-    }
-
-    // EFFECTS: prompts user for confirmation response ("y" or "n")
-    //          returns true if user input = "y" and false if user input = "n"
-    private boolean confirmRemoval() {
-        System.err.println("Are you sure? You will lose all of the patient's information!");
-        System.err.println("Enter 'y' to confirm or 'n' to cancel");
-        String response = input.nextLine().toLowerCase();
-
-        if (!(response.equals("y") || response.equals("n"))) {
-            System.err.println("Invalid input. Please try again.\n");
-            return false;
-        } else if (response.equals("y")) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }
 
