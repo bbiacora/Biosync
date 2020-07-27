@@ -5,17 +5,19 @@ import model.Patients;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// Patient management application
 public class Biosync {
     private Scanner input;
     private Patients patients = new Patients();
 
     public Biosync() {
-        System.out.println("WELCOME TO BIOSYNC!\n");
+        System.out.println("WELCOME TO BIOSYNC!");
         runBiosync();
     }
 
     // MODIFIES: this
     // EFFECTS: processes user input
+    // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     private void runBiosync() {
         boolean keepGoing = true;
         String command;
@@ -23,7 +25,7 @@ public class Biosync {
 
         while (keepGoing) {
             displayMenu();
-            command = input.next();
+            command = input.nextLine();
             command = command.toLowerCase();
 
             if (command.equals("q")) {
@@ -35,6 +37,7 @@ public class Biosync {
     }
 
     // EFFECTS: displays main menu options to user
+    // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     private void displayMenu() {
         System.out.println("Select:");
         System.out.println("\tv ➝ View the registered patients");
@@ -45,6 +48,7 @@ public class Biosync {
 
     // MODIFIES: this
     // EFFECTS: processes user command
+    // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     private void processDisplayMenu(String command) {
         if (command.equals("v")) {
             viewPatients();
@@ -67,40 +71,45 @@ public class Biosync {
                 String personalHealthNumber = patients.getPatient(key).getPersonalHealthNumber();
                 String firstName = patients.getPatient(key).getFirstName();
                 String lastName = patients.getPatient(key).getLastName();
-                System.out.println("\t\t" + personalHealthNumber + "\t\t\t" + " | \t " + firstName + " " + lastName);
+                System.out.println("\t\t" + personalHealthNumber + "\t\t\t" + " | \t " + lastName + ", " + firstName);
             }
             selectPatient();
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: prompts user to enter patient's personal health number, and first and last name;
-    //          adds patient to patients;
+    // EFFECTS: prompts user to enter patient's personal health number and first and last name;
+    //          adds patient to patients if no patient is mapped to personal health number in patients;
     //          prints a confirmation that the patient has been added;
     private void addPatient() {
         System.out.println("Patient's 5-digit Personal Health Number:");
-        String personalHealthNumber = input.next();
+        String personalHealthNumber = input.nextLine();
         personalHealthNumber = validate(personalHealthNumber);
 
-        System.out.println("Patient's first name: ");
-        String firstName = input.next();
+        if (patients.containsPatient(personalHealthNumber)) {
+            System.err.println("Patient already resgistered in the system.");
+        } else {
+            System.out.println("Patient's first name: ");
+            String firstName = input.nextLine();
 
-        System.out.println("Patient's Last name: ");
-        String lastName = input.next();
+            System.out.println("Patient's Last name: ");
+            String lastName = input.nextLine();
 
-        patients.addPatient(personalHealthNumber, firstName, lastName);
-        System.out.println("\n" + firstName + " " + lastName + " has been added to the system.\n");
+            patients.addPatient(personalHealthNumber, firstName, lastName);
+            System.out.println("\n" + firstName + " " + lastName + " has been added to the system.\n");
+        }
     }
 
     // MODIFIES: this
-    // EFFECTS: prompts user for personal health number, if valid removes corresponding patient,
+    // EFFECTS: prompts user for personal health number, if valid and
+    //          if patient exisits, removes corresponding patient,
     //          otherwise prompts user to enter a new personal health number
     private void removePatient() {
         if (patients.getPatientKeySet().size() == 0) {
             System.err.println("There are no patients registered in the system.\n");
         } else {
             System.out.println("Enter patient's Personal Health Number");
-            String personalHealthNumber = input.next();
+            String personalHealthNumber = input.nextLine();
             personalHealthNumber = validate(personalHealthNumber);
             if (!patients.containsPatient(personalHealthNumber)) {
                 System.err.println("Patient not found.\n");
@@ -117,12 +126,11 @@ public class Biosync {
 
     // MODIFIES: this
     // EFFECTS: prompts user to select a patient;
-    //          validates personal health number;
-    //          prints patient records;
-    //          allows user to modify patient's records
+    //          if patient exists, prints patient records;
+    //          prompts user to modify patient's records
     private void selectPatient() {
         System.out.println("\nEnter patient's Personal Health Number to view their records");
-        String personalHealthNumber = input.next();
+        String personalHealthNumber = input.nextLine();
         personalHealthNumber = validate(personalHealthNumber);
 
         if (!patients.containsPatient(personalHealthNumber)) {
@@ -131,6 +139,51 @@ public class Biosync {
             printPatientRecord(personalHealthNumber);
             modifyPatientRecord(personalHealthNumber);
         }
+    }
+
+    // EFFECTS: displays patient menu options to user
+    // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
+    private void displayPatientMenu() {
+        System.out.println("Select:");
+        System.out.println("\td ➝ Add a diagnosis to patient's records");
+//        System.out.println("\tv ➝ Remove a diagnosis to patient's records");
+        System.out.println("\tm ➝ Add a medication to patient's records");
+//        System.out.println("\tx ➝ Remove a medication to patient's records");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: processes user command
+    // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
+    private void processPatientMenu(String command, String personalHealthNumber) {
+        if (command.equals("d")) {
+            System.out.println("Enter diagnosis: ");
+            command = input.nextLine();
+            patients.getPatient(personalHealthNumber).addDiagnosis(command);
+//        } else if (command.equals("v")) {
+//            System.out.println("Enter diagnosis to be removed: ");
+//            command = input.nextLine();
+//            patients.getPatient(personalHealthNumber).removeDiagnosis(command);
+        } else {
+            System.out.println("Enter medication: ");
+            command = input.nextLine();
+            patients.getPatient(personalHealthNumber).addMedication(command);
+//        } else {
+//            System.out.println("Enter medication to be removed: ");
+//            String response = input.nextLine();
+//            patients.getPatient(personalHealthNumber).removeDiagnosis(response);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds a diagnosis or a medication to patient's records
+    private void modifyPatientRecord(String personalHealthNumber) {
+        String command = "";
+
+        while (!(command.equals("d") || command.equals("m"))) {
+            displayPatientMenu();
+            command = input.nextLine();
+        }
+        processPatientMenu(command, personalHealthNumber);
     }
 
     // EFFECTS: prints patient records
@@ -142,49 +195,6 @@ public class Biosync {
         formatRecords(patients.getPatient(personalHealthNumber).getDiagnoses());
         System.out.println("\nMedications: ");
         formatRecords(patients.getPatient(personalHealthNumber).getMedications());
-    }
-
-    // EFFECTS: displays patient menu options to user
-    private void displayPatientMenu() {
-        System.out.println("Select:");
-        System.out.println("\td ➝ Add a diagnosis to patient's records");
-//        System.out.println("\tv ➝ Remove a diagnosis to patient's records");
-        System.out.println("\tm ➝ Add a medication to patient's records");
-//        System.out.println("\tx ➝ Remove a medication to patient's records");
-    }
-
-    // MODIFIES: this
-    // EFFECTS: processes user command
-    private void processPatientMenu(String command, String personalHealthNumber) {
-        if (command.equals("d")) {
-            System.out.println("Enter diagnosis: ");
-            command = input.next();
-            patients.getPatient(personalHealthNumber).addDiagnosis(command);
-//        } else if (command.equals("v")) {
-//            System.out.println("Enter diagnosis to be removed: ");
-//            command = input.next();
-//            patients.getPatient(personalHealthNumber).removeDiagnosis(command);
-        } else {
-            System.out.println("Enter diagnosis: ");
-            command = input.next();
-            patients.getPatient(personalHealthNumber).addMedication(command);
-//        } else {
-//            System.out.println("Enter medication to be removed: ");
-//            String response = input.next();
-//            patients.getPatient(personalHealthNumber).removeDiagnosis(response);
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: makes modifications to patient's records specifically, adds a diagnosis and/or a medication
-    private void modifyPatientRecord(String personalHealthNumber) {
-        String command = "";
-
-        while (!(command.equals("d") || command.equals("m"))) {
-            displayPatientMenu();
-            command = input.next();
-        }
-        processPatientMenu(command, personalHealthNumber);
     }
 
     // EFFECTS: formats strings from a list for user readability and prints it
@@ -206,7 +216,7 @@ public class Biosync {
         while (keepGoing) {
             if (!(personalHealthNumber.length() == 5 && personalHealthNumber.matches("^[0-9]*$"))) {
                 System.err.println("Please enter a valid personal health number.");
-                personalHealthNumber = input.next();
+                personalHealthNumber = input.nextLine();
             } else {
                 keepGoing = false;
             }
@@ -214,12 +224,12 @@ public class Biosync {
         return personalHealthNumber;
     }
 
-    // EFFECTS: keeps prompting user for valid response ("y" or "n")
+    // EFFECTS: prompts user for confirmation response ("y" or "n")
     //          returns true if user input = "y" and false if user input = "n"
     private boolean confirmRemoval() {
         System.err.println("Are you sure? You will lose all of the patient's information!");
         System.err.println("Enter 'y' to confirm or 'n' to cancel");
-        String response = input.next();
+        String response = input.nextLine().toLowerCase();
 
         if (!(response.equals("y") || response.equals("n"))) {
             System.err.println("Invalid input. Please try again.\n");

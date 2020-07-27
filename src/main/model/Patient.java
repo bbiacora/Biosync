@@ -27,13 +27,12 @@ public class Patient {
         this.diagnoses.add(diagnosis);
     }
 
-    // REQUIRES: medications is not null
     // MODIFIES: this
     // EFFECTS: searches for a diagnosis in diagnoses and removes it if found
     public void removeDiagnosis(String diagnosis) {
         for (String d : diagnoses) {
             if (d.equalsIgnoreCase(diagnosis)) {
-                medications.remove(d);
+                diagnoses.remove(d);
             }
         }
     }
@@ -46,7 +45,6 @@ public class Patient {
         medications.add(medication);
     }
 
-    // REQUIRES: medications is not null
     // MODIFIES: this
     // EFFECTS: searches for a medication in medications and removes it if found
     public void removeMedication(String medication) {

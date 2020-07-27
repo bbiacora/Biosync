@@ -13,16 +13,12 @@ public class Patients {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates a new patient and adds it to patients if personal health number is valid
-    // TODO EXCEPTION
-    public boolean addPatient(String personalHealthNumber, String firstName, String lastName) {
-        if (!(this.containsPatient(personalHealthNumber))) {
-            Patient patient = new Patient(personalHealthNumber, firstName, lastName);
-            patients.put(personalHealthNumber, patient);
-            return true;
-        } else {
-            return false;
-        }
+    // EFFECTS: creates a new patient and adds it to patients;
+    //          returns true if there is no patient assigned to personal health number,
+    //          otherwise returns false
+    public void addPatient(String personalHealthNumber, String firstName, String lastName) {
+        Patient patient = new Patient(personalHealthNumber, firstName, lastName);
+        patients.put(personalHealthNumber, patient);
     }
 
     // MODIFIES: this

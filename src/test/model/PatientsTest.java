@@ -14,14 +14,10 @@ class PatientsTest {
     }
 
     @Test
-    public void testAddPatientNumberNotRegistered() {
-        assertTrue(patients.addPatient("01234", "John", "Smith"));
-    }
-
-    @Test
-    public void testAddPatientNumberAlreadyRegistered() {
+    public void testAddPatient() {
+        assertFalse(patients.getPatientKeySet().contains("01234"));
         patients.addPatient("01234", "John", "Smith");
-        assertFalse(patients.addPatient("01234", "Jane", "Doe"));
+        assertTrue(patients.getPatientKeySet().contains("01234"));
     }
 
     @Test
@@ -48,7 +44,7 @@ class PatientsTest {
     public void testGetPatientNotInPatients() {
         String patientKey = "11112";
         patients.addPatient("01234", "John", "Smith");
-        assertEquals(patients.getPatient(patientKey), null);
+        assertNull(patients.getPatient(patientKey));
     }
 
     @Test
