@@ -79,21 +79,24 @@ public class Biosync {
     }
 
     // MODIFIES: this
-    // EFFECTS: prompts user to enter patient's personal health number and first and last name;
+    // EFFECTS: prompts user to enter a valid patient's personal health number and first and last name;
     //          adds patient to patients if personal health number is not yet mapped to an existing patient;
     //          prints a confirmation that the patient has been added;
     private void addPatient() {
         System.out.println("Patient's 5-digit Personal Health Number:");
         String personalHealthNumber = input.nextLine();
         personalHealthNumber = validate(personalHealthNumber);
-
         if (patients.containsPatient(personalHealthNumber)) {
             System.err.println("Patient already resgistered in the system.\n");
+        }
+        System.out.println("Patient's first name: ");
+        String firstName = input.nextLine();
+        System.out.println("Patient's Last name: ");
+        String lastName = input.nextLine();
+        if (!firstName.matches("^[a-zA-Z_ ]*$") || !lastName.matches("^[a-zA-Z_ ]*$")) {
+            System.err.println("Invalid input. Alphabetical characters only.\n");
+            addPatient();
         } else {
-            System.out.println("Patient's first name: ");
-            String firstName = input.nextLine();
-            System.out.println("Patient's Last name: ");
-            String lastName = input.nextLine();
             patients.addPatient(personalHealthNumber, firstName, lastName);
             System.out.println("\n" + firstName + " " + lastName + " has been added to the system.\n");
         }
