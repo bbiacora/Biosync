@@ -27,7 +27,7 @@ class PatientTest {
         patient.addDiagnosis("Asthma");
         assertTrue(patient.getDiagnoses().contains("Hypertension"));
         patient.removeDiagnosis("Hypertension");
-        assertFalse(patient.getMedications().contains("Hypertension"));
+        assertFalse(patient.getDiagnoses().contains("Hypertension"));
     }
 
     @Test
@@ -35,8 +35,7 @@ class PatientTest {
         patient.addDiagnosis("Hypertension");
         patient.addDiagnosis("Asthma");
         assertTrue(patient.getDiagnoses().contains("Hypertension"));
-        patient.removeDiagnosis("Hypertension");
-        assertFalse(patient.getMedications().contains("hyPertension"));
+        patient.removeDiagnosis("hypErtension");
     }
 
     @Test

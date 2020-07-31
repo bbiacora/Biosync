@@ -11,7 +11,7 @@ public class Patient {
     private ArrayList<String> diagnoses;
     private ArrayList<String> medications;
 
-    // EFFECTS: sets patients's personal health number, first name and last name;
+    // EFFECTS: sets patients' personal health number, first name and last name;
     //          initializes two empty lists for patient's diagnoses and medications
     public Patient(String personalHealthNumber, String firstName, String lastName) {
         this.personalHealthNumber = personalHealthNumber;
@@ -36,8 +36,6 @@ public class Patient {
             }
         }
     }
-
-    // TODO: removeDiagnosis() method if there's time
 
     // MODIFIES: this
     // EFFECTS: adds a medication to patient's list of medications
