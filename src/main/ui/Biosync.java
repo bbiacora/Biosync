@@ -88,17 +88,18 @@ public class Biosync {
         personalHealthNumber = validate(personalHealthNumber);
         if (patients.containsPatient(personalHealthNumber)) {
             System.err.println("Patient already resgistered in the system.\n");
-        }
-        System.out.println("Patient's first name: ");
-        String firstName = input.nextLine();
-        System.out.println("Patient's Last name: ");
-        String lastName = input.nextLine();
-        if (!firstName.matches("^[a-zA-Z_ ]*$") || !lastName.matches("^[a-zA-Z_ ]*$")) {
-            System.err.println("Invalid input. Alphabetical characters only.\n");
-            addPatient();
         } else {
-            patients.addPatient(personalHealthNumber, firstName, lastName);
-            System.out.println("\n" + firstName + " " + lastName + " has been added to the system.\n");
+            System.out.println("Patient's first name: ");
+            String firstName = input.nextLine();
+            System.out.println("Patient's Last name: ");
+            String lastName = input.nextLine();
+            if (!firstName.matches("^[a-zA-Z_ ]*$") || !lastName.matches("^[a-zA-Z_ ]*$")) {
+                System.err.println("Invalid input. Alphabetical characters only.\n");
+                addPatient();
+            } else {
+                patients.addPatient(personalHealthNumber, firstName, lastName);
+                System.out.println("\n" + firstName + " " + lastName + " has been added to the system.\n");
+            }
         }
     }
 
