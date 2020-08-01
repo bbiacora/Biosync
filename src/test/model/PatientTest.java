@@ -36,6 +36,7 @@ class PatientTest {
         patient.addDiagnosis("Asthma");
         assertTrue(patient.getDiagnoses().contains("Hypertension"));
         patient.removeDiagnosis("hypErtension");
+        assertFalse(patient.getDiagnoses().contains("Hypertension"));
     }
 
     @Test

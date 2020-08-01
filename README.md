@@ -13,13 +13,19 @@ developing, which aims to objectivize and expedite depression diagnosis and trea
 
 
 ## User Stories
-- [x] As a user, I want to be able to add a patient to a map of patients
-- [x] As a user, I want to be able to remove a patient from a map of patients
-- [x] As a user, I want to be able to view the map of patients
-- [x] As a user, I want to be able to select a patient from a map of patients and view their records
 
-***Extras:***
-- [x] As a user, I want to be able to add a diagnosis to a patient’s records
-- As a user, I want to be able to remove a diagnosis from a patient's records
-- [x] As a user, I want to be able to add a medication to patient's records
-- As a user, I want to be able to remove a medication from a patient's records
+**PHASE 1**
+- [x] As a user, I want to be able to **add a patient** to a map of patients
+- [x] As a user, I want to be able to **remove a patient** from a map of patients
+- [x] As a user, I want to be able to **view the map of patients** in the system
+- [x] As a user, I want to be able to **select a patient** from a map of patients **and view their records**
+
+*Extras:*
+- [x] As a user, I want to be able to **add a diagnosis** to a patient’s records
+- [ ] As a user, I want to be able to **remove a diagnosis** from a patient's records
+- [x] As a user, I want to be able to **add a medication** to patient's records
+- [ ] As a user, I want to be able to **remove a medication** from a patient's records
+
+**PHASE 2**
+- [ ] As a user, I want to be able to **save the map of patients** to file
+- [ ] As a user, I want to be able to **load the map of patients** from file when the program starts

@@ -82,6 +82,8 @@ public class Biosync {
     // EFFECTS: prompts user to enter a valid patient's personal health number and first and last name;
     //          adds patient to patients if personal health number is not yet mapped to an existing patient;
     //          prints a confirmation that the patient has been added;
+    // Reference:
+    // https://stackoverflow.com/questions/4244109/regular-expression-to-accept-only-characters-a-z-in-a-textbox
     private void addPatient() {
         System.out.println("Patient's 5-digit Personal Health Number:");
         String personalHealthNumber = input.nextLine();

@@ -37,6 +37,7 @@ public class Patients {
         }
     }
 
+    // EFFECTS: returns patient key set
     public Set<String> getPatientKeySet() {
         return patients.keySet();
     }
