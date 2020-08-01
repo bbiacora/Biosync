@@ -11,7 +11,7 @@ public class Patient {
     private ArrayList<String> diagnoses;
     private ArrayList<String> medications;
 
-    // EFFECTS: sets patients' personal health number, first name and last name;
+    // EFFECTS: sets patient's personal health number, first name and last name;
     //          initializes two empty lists for patient's diagnoses and medications
     public Patient(String personalHealthNumber, String firstName, String lastName) {
         this.personalHealthNumber = personalHealthNumber;
@@ -19,6 +19,18 @@ public class Patient {
         this.lastName = lastName;
         this.diagnoses = new ArrayList<>();
         this.medications = new ArrayList<>();
+    }
+
+    // EFFECTS: sets patient's personal health number, first name and last name;
+    //          initializes two empty lists for patient's diagnoses and medications
+    // NOTE: this constructor is to be used only when constructing a patient from data stored in file
+    public Patient(String personalHealthNumber, String firstName, String lastName,
+                   ArrayList<String> diagnoses, ArrayList<String> medications) {
+        this.personalHealthNumber = personalHealthNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.diagnoses = diagnoses;
+        this.medications = medications;
     }
 
     // MODIFIES: this
