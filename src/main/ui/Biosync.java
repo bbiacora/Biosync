@@ -87,10 +87,8 @@ public class Biosync {
             if (patients.getPatientKeySet().size() == 0) {
                 System.err.println("There are no patients registered in the system.\n");
             } else {
-                for (String key : patients.getPatientKeySet()) {
-                    writer.write(patients.getPatient(key));
-                    writer.close();
-                }
+                writer.write(patients);
+                writer.close();
             }
         } catch (FileNotFoundException e) {
             System.out.println(PATIENTS_FILE + " not found.");

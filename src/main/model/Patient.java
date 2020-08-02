@@ -103,16 +103,17 @@ public class Patient extends Patients {
         printWriter.print(Reader.DELIMITER);
         printWriter.print(lastName);
         printWriter.print(Reader.DELIMITER);
-
         saveList(printWriter, this.getDiagnoses());
+        printWriter.print(Reader.DELIMITER);
         saveList(printWriter, this.getMedications());
+        printWriter.println();
     }
 
     protected void saveList(PrintWriter printWriter, ArrayList<String> list) {
-        for (int i = 0; i < list.size() - 1; i++) {
-            printWriter.print(list.get(i));
-            printWriter.print(Reader.DELIMITER);
-        }
+        printWriter.print(list.get(0));
+        printWriter.print(Reader.DELIMITER);
+        printWriter.print(list.get(1));
+        printWriter.print(Reader.DELIMITER);
         printWriter.print(list.get(2));
     }
 }
