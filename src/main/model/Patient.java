@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 // Represents a patient with a personal health number, a first name, a last name,
 // a list of diagnoses, and a list of medications
-public class Patient {
+public class Patient extends Patients {
     private String personalHealthNumber;
     private String firstName;
     private String lastName;
@@ -33,6 +33,7 @@ public class Patient {
         this.medications = medications;
     }
 
+    // REQUIRES: diagnoses size is !>= 3
     // MODIFIES: this
     // EFFECTS: adds a diagnosis to patient's list of diagnoses
     public void addDiagnosis(String diagnosis) {
@@ -49,6 +50,7 @@ public class Patient {
         }
     }
 
+    // REQUIRES: medications size is !>= 3
     // MODIFIES: this
     // EFFECTS: adds a medication to patient's list of medications
     public void addMedication(String medication) {

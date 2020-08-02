@@ -1,10 +1,15 @@
 package model;
 
+import persistence.Reader;
+import persistence.Savable;
+
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
 // Represents a map of patients to be handled by Biosync
-public class Patients {
+public class Patients implements Savable {
     private HashMap<String, Patient> patients;
 
     //EFFECTS: initializes patients as an empty hashmap
@@ -51,5 +56,26 @@ public class Patients {
             }
         }
         return false;
+    }
+
+    @Override
+    public void save(PrintWriter printWriter) {
+        for (String key : getPatientKeySet()) {
+            printWriter.print(key);
+            printWriter.print(Reader.DELIMITER);
+            printWriter.print(getPatient(key).getFirstName());
+            printWriter.print(Reader.DELIMITER);
+            printWriter.print(getPatient(key).getLastName());
+            printWriter.print(Reader.DELIMITER);
+            saveList(printWriter, getPatient(key).getDiagnoses());
+            saveList(printWriter, getPatient(key).getMedications());
+        }
+    }
+
+    private void saveList(PrintWriter printWriter, ArrayList<String> list) {
+        for (int i = 0; i < list.size(); i++) {
+            printWriter.print(list.get(i));
+            printWriter.print(Reader.DELIMITER);
+        }
     }
 }
