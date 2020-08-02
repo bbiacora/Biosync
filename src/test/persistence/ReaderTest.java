@@ -2,6 +2,7 @@ package persistence;
 
 import model.Patient;
 import model.Patients;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -12,6 +13,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 class ReaderTest {
     Reader reader;
+
+    @BeforeEach
+    void setUp() {
+        reader = new Reader();
+    }
 
     @Test
     void testParsePatientsFile() {
