@@ -1,3 +1,2 @@
-56789, Jane, Doe, Asthma, null, null, Fluticasone, null, null
-12123,Bianca,Gayle,null,null,null,null,null,null
-01234, John, Smith, Hypertension, null, null, Bumetanide, null, null
+56789,Jane,Doe,Asthma,-,-,Fluticasone,-,-
+01234,John,Smith,Hypertension,-,-,Bumetanide,-,-

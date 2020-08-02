@@ -4,7 +4,6 @@ import persistence.Reader;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 // Represents a patient with a personal health number, a first name, a last name,
 // a list of diagnoses, and a list of medications
@@ -21,8 +20,8 @@ public class Patient extends Patients {
         this.personalHealthNumber = personalHealthNumber;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.diagnoses = new ArrayList<>(Arrays.asList(new String[3]));
-        this.medications = new ArrayList<>(Arrays.asList(new String[3]));
+        this.diagnoses = new ArrayList<>();
+        this.medications = new ArrayList<>();
     }
 
     // EFFECTS: sets patient's personal health number, first name and last name;
@@ -37,24 +36,30 @@ public class Patient extends Patients {
         this.medications = medications;
     }
 
-    // REQUIRES: diagnoses size is !>= 3
+    // REQUIRES: diagnoses size <= 3
     // MODIFIES: this
     // EFFECTS: adds a diagnosis to patient's list of diagnoses
     public void addDiagnosis(String diagnosis) {
-        this.diagnoses.add(diagnosis);
+        for (int i = 0; i < 3; i++) {
+            if (diagnoses.get(i).equals("-")) {
+                diagnoses.set(i, diagnosis);
+                break;
+            }
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: searches for a diagnosis in diagnoses and removes it if found
     public void removeDiagnosis(String diagnosis) {
-        for (String d : diagnoses) {
-            if (d.equalsIgnoreCase(diagnosis)) {
-                diagnoses.remove(d);
+        for (int i = 0; i < 3; i++) {
+            if (medications.get(i).equals("-")) {
+                medications.set(i, diagnosis);
+                break;
             }
         }
     }
 
-    // REQUIRES: medications size is !>= 3
+    // REQUIRES: medications size <= 3
     // MODIFIES: this
     // EFFECTS: adds a medication to patient's list of medications
     public void addMedication(String medication) {
@@ -96,6 +101,8 @@ public class Patient extends Patients {
         return medications;
     }
 
+    // MODIFIES: printWriter
+    // EFFECTS: writes the savable to printWriter
     public void save(PrintWriter printWriter) {
         printWriter.print(personalHealthNumber);
         printWriter.print(Reader.DELIMITER);
@@ -109,7 +116,12 @@ public class Patient extends Patients {
         printWriter.println();
     }
 
+    // MODIFIES: printWriter
+    // EFFECTS: writes the savable to printWriter
     protected void saveList(PrintWriter printWriter, ArrayList<String> list) {
+        while (list.size() != 3) {
+            list.add("-");
+        }
         printWriter.print(list.get(0));
         printWriter.print(Reader.DELIMITER);
         printWriter.print(list.get(1));

@@ -16,14 +16,16 @@ public class Patients implements Savable {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates a new patient and adds it to patients;
-    //          returns true if there is no patient assigned to personal health number,
-    //          otherwise returns false
+    // EFFECTS: constructs a new patient and adds it to patients
     public void addPatient(String personalHealthNumber, String firstName, String lastName) {
         Patient patient = new Patient(personalHealthNumber, firstName, lastName);
         patients.put(personalHealthNumber, patient);
     }
 
+    // MODIFIES: this
+    // EFFECT: adds an existing patient to patients
+    // NOTE: this method is to be used only when adding a patient to patients
+    //       from data stored in file
     public void addPatient(Patient patient) {
         patients.put(patient.getPersonalHealthNumber(), patient);
     }
@@ -60,6 +62,8 @@ public class Patients implements Savable {
         return false;
     }
 
+    // MODIFIES: printWriter
+    // EFFECTS: writes the savable to printWriter
     @Override
     public void save(PrintWriter printWriter) {
         for (String key : getPatientKeySet()) {
