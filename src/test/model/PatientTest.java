@@ -148,17 +148,32 @@ class PatientTest {
     }
 
     @Test
+    void testMaintainListFull() {
+        diagnoses.add("Hypertension");
+        diagnoses.add("Asthma");
+        diagnoses.add("Anxiety");
+
+        assertFalse(diagnoses.contains("-"));
+        patient.maintainList(diagnoses);
+        assertFalse(diagnoses.contains("-"));
+    }
+
+
+    // Properly tested in WriterTest
+    @Test
     void testSave() {
         assertTrue(patient.save(printWriter));
         assertTrue(otherPatient.save(printWriter));
     }
 
+    // Properly tested in WriterTest
     @Test
     void testSaveList() {
         diagnoses = new ArrayList<>();
         assertTrue(otherPatient.saveList(printWriter, diagnoses));
     }
 
+    // Properly tested in WriterTest
     @Test
     void testMaintainListNotFull() {
         diagnoses.add("Hypertension");
@@ -169,14 +184,5 @@ class PatientTest {
         assertTrue(diagnoses.contains("-"));
     }
 
-    @Test
-    void testMaintainListFull() {
-        diagnoses.add("Hypertension");
-        diagnoses.add("Asthma");
-        diagnoses.add("Anxiety");
 
-        assertFalse(diagnoses.contains("-"));
-        patient.maintainList(diagnoses);
-        assertFalse(diagnoses.contains("-"));
-    }
 }

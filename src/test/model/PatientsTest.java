@@ -91,6 +91,7 @@ class PatientsTest {
         assertFalse(patients.containsPatient(patientKey));
     }
 
+    // Properly tested in WriterTest
     @Test
     void testSave() {
         patients.addPatient(patient);
