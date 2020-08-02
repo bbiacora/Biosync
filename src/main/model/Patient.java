@@ -1,13 +1,14 @@
 package model;
 
 import persistence.Reader;
+import persistence.Savable;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
 // Represents a patient with a personal health number, a first name, a last name,
 // a list of diagnoses, and a list of medications
-public class Patient extends Patients {
+public class Patient implements Savable {
     private String personalHealthNumber;
     private String firstName;
     private String lastName;
@@ -15,7 +16,7 @@ public class Patient extends Patients {
     private ArrayList<String> medications;
 
     // EFFECTS: sets patient's personal health number, first name and last name;
-    //          initializes two empty lists for patient's diagnoses and medications
+    //          initializes two lists for patient's diagnoses and medications
     public Patient(String personalHealthNumber, String firstName, String lastName) {
         this.personalHealthNumber = personalHealthNumber;
         this.firstName = firstName;
@@ -26,6 +27,9 @@ public class Patient extends Patients {
         initializeList(this.medications);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds "-" as placeholders for list's elements
+    // NOTE: this is necessary, so that the the ArrayList can be treated as a fixed list
     private void initializeList(ArrayList<String> list) {
         list.add("-");
         list.add("-");
@@ -44,9 +48,11 @@ public class Patient extends Patients {
         this.medications = medications;
     }
 
-    // REQUIRES: diagnoses size <= 3
+    // REQUIRES: diagnoses size = 3
     // MODIFIES: this
-    // EFFECTS: adds a diagnosis to patient's list of diagnoses
+    // EFFECTS: if there is room left in the list (i.e. contains "-" placeholder),
+    //          adds diagnosis to diagnoses by replacing the placeholder with it;
+    //          stores elements in diagnoses in all UPPERCASE string
     public void addDiagnosis(String diagnosis) {
         diagnosis = diagnosis.toUpperCase();
         for (int i = 0; i < 3; i++) {
@@ -57,18 +63,23 @@ public class Patient extends Patients {
         }
     }
 
+    // REQUIRES: diagnoses size = 3
     // MODIFIES: this
-    // EFFECTS: searches for a diagnosis in diagnoses and removes it if found
+    // EFFECTS: if diagnosis is in diagnoses, removes diagnosis from diagnoses
+    //          and replaces it with a "-" placeholder
     public void removeDiagnosis(String diagnosis) {
         diagnosis = diagnosis.toUpperCase();
         if (diagnoses.contains(diagnosis)) {
             diagnoses.remove(diagnosis);
+            diagnoses.add("-");
         }
     }
 
-    // REQUIRES: medications size <= 3
+    // REQUIRES: medications size = 3
     // MODIFIES: this
-    // EFFECTS: adds a medication to patient's list of medications
+    // EFFECTS: if there is room left in the list (i.e. contains "-" placeholder),
+    //          adds medication to medications by replacing the placeholder with it;
+    //          stores elements in medications in all UPPERCASE string
     public void addMedication(String medication) {
         medication = medication.toUpperCase();
         for (int i = 0; i < 3; i++) {
@@ -79,12 +90,15 @@ public class Patient extends Patients {
         }
     }
 
+    // REQUIRES: diagnoses size = 3
     // MODIFIES: this
-    // EFFECTS: searches for a medication in medications and removes it if found
+    // EFFECTS: if diagnosis is in diagnoses, removes diagnosis from diagnoses
+    //          and replaces it with a "-" placeholder
     public void removeMedication(String medication) {
         medication = medication.toUpperCase();
         if (medications.contains(medication)) {
             medications.remove(medication);
+            medications.add("-");
         }
     }
 
@@ -115,6 +129,7 @@ public class Patient extends Patients {
 
     // MODIFIES: printWriter
     // EFFECTS: writes the savable to printWriter
+    // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     public void save(PrintWriter printWriter) {
         printWriter.print(personalHealthNumber);
         printWriter.print(Reader.DELIMITER);
@@ -128,16 +143,23 @@ public class Patient extends Patients {
         printWriter.println();
     }
 
-    // MODIFIES: printWriter
-    // EFFECTS: writes the savable to printWriter
-    protected void saveList(PrintWriter printWriter, ArrayList<String> list) {
-        while (list.size() != 3) {
-            list.add("-");
-        }
+    // MODIFIES: list, printWriter
+    // EFFECTS: writes list to printWriter
+    // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
+    private void saveList(PrintWriter printWriter, ArrayList<String> list) {
+        maintainList(list);
         printWriter.print(list.get(0));
         printWriter.print(Reader.DELIMITER);
         printWriter.print(list.get(1));
         printWriter.print(Reader.DELIMITER);
         printWriter.print(list.get(2));
+    }
+
+    // MODIFIES: list
+    // EFFECTS: adds "-" placeholder to list to maintain specification that list size must be = 3
+    private void maintainList(ArrayList<String> list) {
+        while (list.size() != 3) {
+            list.add("-");
+        }
     }
 }

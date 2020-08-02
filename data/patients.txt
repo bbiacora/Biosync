@@ -1,2 +1,2 @@
-56789,Jane,Doe,Asthma,-,-,Fluticasone,-,-
-01234,John,Smith,Hypertension,-,-,Bumetanide,-,-
+56789,Jane,Doe,ASTHMA,-,-,FLUTICASONE,-,-
+01234,John,Smith,HYPERTENSION,-,-,BUMETANIDE,-,-

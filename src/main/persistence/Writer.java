@@ -27,5 +27,4 @@ public class Writer {
     public void close() {
         printWriter.close();
     }
-
 }

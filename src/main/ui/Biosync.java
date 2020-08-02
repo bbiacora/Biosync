@@ -17,6 +17,9 @@ public class Biosync {
     private Scanner input;
     private Patients patients;
 
+    // EFFECTS: prints welcome message;
+    //          loads patients from PATIENTS_FILE;
+    //          runs application;
     public Biosync() {
         System.out.println("WELCOME TO BIOSYNC!");
         loadPatients();
@@ -72,6 +75,10 @@ public class Biosync {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads patients from PATIENTS_FILE, if file exists;
+    //          otherwise instantiates patients
+    // Refernce: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     private void loadPatients() {
         try {
             Patients patients = Reader.readPatients(new File(PATIENTS_FILE));
@@ -81,6 +88,8 @@ public class Biosync {
         }
     }
 
+    // EFFECTS: saves all patient's information in patients to PATIENTS_FILE
+    // Refernce: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     private void savePatients() {
         try {
             Writer writer = new Writer(new File(PATIENTS_FILE));
@@ -97,7 +106,8 @@ public class Biosync {
         }
     }
 
-    // EFFECTS: prints name of all patient in patients along with their corresponding personal health number
+    // EFFECTS: prints name of all patient in patients along with their corresponding personal health number;
+    //          prompts user to select and modify the records of a patient displayed
     // Reference: https://stackoverflow.com/questions/46041997/print-list-of-values-from-hashmap
     private void viewPatients() {
         if (patients.getPatientKeySet().size() == 0) {
@@ -204,9 +214,9 @@ public class Biosync {
     private void displayPatientMenu() {
         System.out.println("Select:");
         System.out.println("\td ➝ Add a diagnosis to patient's records");
-//        System.out.println("\tv ➝ Remove a diagnosis to patient's records");
+        System.out.println("\tv ➝ Remove a diagnosis to patient's records");
         System.out.println("\tm ➝ Add a medication to patient's records");
-//        System.out.println("\tx ➝ Remove a medication to patient's records");
+        System.out.println("\tx ➝ Remove a medication to patient's records");
     }
 
     // MODIFIES: this
@@ -217,18 +227,18 @@ public class Biosync {
             System.out.println("Enter diagnosis: ");
             command = input.nextLine();
             patients.getPatient(personalHealthNumber).addDiagnosis(command);
-//        } else if (command.equals("v")) {
-//            System.out.println("Enter diagnosis to be removed: ");
-//            command = input.nextLine();
-//            patients.getPatient(personalHealthNumber).removeDiagnosis(command);
-        } else {
+        } else if (command.equals("v")) {
+            System.out.println("Enter diagnosis to be removed: ");
+            command = input.nextLine();
+            patients.getPatient(personalHealthNumber).removeDiagnosis(command);
+        } else if (command.equals("m")) {
             System.out.println("Enter medication: ");
             command = input.nextLine();
             patients.getPatient(personalHealthNumber).addMedication(command);
-//        } else {
-//            System.out.println("Enter medication to be removed: ");
-//            String response = input.nextLine().toLowerCase();
-//            patients.getPatient(personalHealthNumber).removeDiagnosis(response);
+        } else {
+            System.out.println("Enter medication to be removed: ");
+            String response = input.nextLine().toLowerCase();
+            patients.getPatient(personalHealthNumber).removeMedication(response);
         }
     }
 
@@ -236,7 +246,7 @@ public class Biosync {
     // EFFECTS: adds a diagnosis or a medication to patient's records
     private void modifyPatientRecord(String personalHealthNumber) {
         String command = "";
-        while (!(command.equals("d") || command.equals("m"))) {
+        while (!(command.equals("d") || command.equals("v") || command.equals("m") || command.equals("x"))) {
             displayPatientMenu();
             command = input.nextLine();
         }
@@ -254,7 +264,7 @@ public class Biosync {
         formatRecords(patients.getPatient(personalHealthNumber).getMedications());
     }
 
-    // EFFECTS: formats strings from a list for user readability and prints it
+    // EFFECTS: prints a bulleted list
     private void formatRecords(ArrayList<String> list) {
         if (list.size() == 0) {
             System.out.println(" - ");

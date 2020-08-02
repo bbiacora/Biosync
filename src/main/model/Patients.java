@@ -24,8 +24,7 @@ public class Patients implements Savable {
 
     // MODIFIES: this
     // EFFECT: adds an existing patient to patients
-    // NOTE: this method is to be used only when adding a patient to patients
-    //       from data stored in file
+    // NOTE: this method is to be used only when adding a patient to patients from data stored in file
     public void addPatient(Patient patient) {
         patients.put(patient.getPersonalHealthNumber(), patient);
     }
@@ -36,8 +35,7 @@ public class Patients implements Savable {
         patients.remove(personalHealthNumber);
     }
 
-    // EFFECTS: returns a patient, if patient is in patients
-    //          otherwise, returns null
+    // EFFECTS: returns a patient, if patient is in patients otherwise, returns null
     public Patient getPatient(String personalHealthNumber) {
         if (containsPatient(personalHealthNumber)) {
             return patients.get(personalHealthNumber);
@@ -64,6 +62,7 @@ public class Patients implements Savable {
 
     // MODIFIES: printWriter
     // EFFECTS: writes the savable to printWriter
+    // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     @Override
     public void save(PrintWriter printWriter) {
         for (String key : getPatientKeySet()) {

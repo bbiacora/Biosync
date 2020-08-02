@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-// Represents a reader that can read account data from a file
+// Represents a reader that can read patient data from a file
 // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
 public class Reader {
     public static final String DELIMITER = ",";
 
-    // EFFECTS: returns a hashmap of accounts parsed from file;
+    // EFFECTS: returns patients parsed from file;
     //          throws IOException if an exception is raised when opening / reading from file
     public static Patients readPatients(File file) throws IOException {
         List<String> fileContent = readFile(file);
@@ -28,6 +28,8 @@ public class Reader {
         return Files.readAllLines(file.toPath());
     }
 
+    // EFFECTS: returns patients parsed from list of strings
+    //          where each string contains data for one patient
     private static Patients parseContent(List<String> filePatientContent) {
         Patients patients = new Patients();
         ArrayList<Patient> patientsArray = new ArrayList<>();
@@ -50,7 +52,13 @@ public class Reader {
         return new ArrayList<>(Arrays.asList(splits));
     }
 
-
+    // REQUIRES: components has size 9 where
+    //           element 0 represents the patient's personal health number,
+    //           element 1 represents the patient's first name,
+    //           element 2 represents the patient's last name,
+    //           elements 3-5 represents the patient's diagnosis records,
+    //           element 6-8 represents the patient's medication records
+    // EFFECTS: returns a patient constructed from components
     private static Patient parsePatient(List<String> components) {
         ArrayList<String> diagnoses = new ArrayList<>();
         ArrayList<String> medications = new ArrayList<>();
