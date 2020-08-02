@@ -27,15 +27,6 @@ public class Patient implements Savable {
         initializeList(this.medications);
     }
 
-    // MODIFIES: this
-    // EFFECTS: adds "-" as placeholders for list's elements
-    // NOTE: this is necessary, so that the the ArrayList can be treated as a fixed list
-    private void initializeList(ArrayList<String> list) {
-        list.add("-");
-        list.add("-");
-        list.add("-");
-    }
-
     // EFFECTS: sets patient's personal health number, first name and last name;
     //          initializes two empty lists for patient's diagnoses and medications
     // NOTE: this constructor is to be used only when constructing a patient from data stored in file
@@ -48,6 +39,15 @@ public class Patient implements Savable {
         this.medications = medications;
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds "-" as placeholders for list's elements
+    // NOTE: this is necessary, so that the the ArrayList can be treated as a fixed list
+    private void initializeList(ArrayList<String> list) {
+        list.add("-");
+        list.add("-");
+        list.add("-");
+    }
+
     // REQUIRES: diagnoses size = 3
     // MODIFIES: this
     // EFFECTS: if there is room left in the list (i.e. contains "-" placeholder),
@@ -58,7 +58,7 @@ public class Patient implements Savable {
         for (int i = 0; i < 3; i++) {
             if (diagnoses.get(i).equals("-")) {
                 diagnoses.set(i, diagnosis);
-                break;
+                return;
             }
         }
     }
@@ -128,9 +128,9 @@ public class Patient implements Savable {
     }
 
     // MODIFIES: printWriter
-    // EFFECTS: writes the savable to printWriter
+    // EFFECTS: writes the savable to printWriter, returns true at the end of the execution
     // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
-    public void save(PrintWriter printWriter) {
+    public boolean save(PrintWriter printWriter) {
         printWriter.print(personalHealthNumber);
         printWriter.print(Reader.DELIMITER);
         printWriter.print(firstName);
@@ -141,23 +141,25 @@ public class Patient implements Savable {
         printWriter.print(Reader.DELIMITER);
         saveList(printWriter, this.getMedications());
         printWriter.println();
+        return true;
     }
 
     // MODIFIES: list, printWriter
-    // EFFECTS: writes list to printWriter
+    // EFFECTS: writes list to printWriter, returns true at the end of the execution
     // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
-    private void saveList(PrintWriter printWriter, ArrayList<String> list) {
+    public boolean saveList(PrintWriter printWriter, ArrayList<String> list) {
         maintainList(list);
         printWriter.print(list.get(0));
         printWriter.print(Reader.DELIMITER);
         printWriter.print(list.get(1));
         printWriter.print(Reader.DELIMITER);
         printWriter.print(list.get(2));
+        return true;
     }
 
     // MODIFIES: list
     // EFFECTS: adds "-" placeholder to list to maintain specification that list size must be = 3
-    private void maintainList(ArrayList<String> list) {
+    public void maintainList(ArrayList<String> list) {
         while (list.size() != 3) {
             list.add("-");
         }

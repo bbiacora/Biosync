@@ -61,12 +61,13 @@ public class Patients implements Savable {
     }
 
     // MODIFIES: printWriter
-    // EFFECTS: writes the savable to printWriter
+    // EFFECTS: writes the savable to printWriter, , returns true at the end of the execution
     // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     @Override
-    public void save(PrintWriter printWriter) {
+    public boolean save(PrintWriter printWriter) {
         for (String key : getPatientKeySet()) {
             getPatient(key).save(printWriter);
         }
+        return true;
     }
 }
