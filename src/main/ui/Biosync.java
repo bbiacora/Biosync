@@ -1,22 +1,25 @@
 package ui;
 
 import model.Patients;
+import persistence.Reader;
 import persistence.Writer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 // Patient management application
 public class Biosync {
-    private static final String PATIENTS_FILE = ".data/patients.txt";
+    private static final String PATIENTS_FILE = "./data/patients.txt";
     private Scanner input;
-    private Patients patients = new Patients();
+    private Patients patients;
 
     public Biosync() {
         System.out.println("WELCOME TO BIOSYNC!");
+        loadPatients();
         runBiosync();
     }
 
@@ -66,6 +69,33 @@ public class Biosync {
             savePatients();
         } else {
             System.err.println("Invalid input. Please try again.\n");
+        }
+    }
+
+    private void loadPatients() {
+        try {
+            Patients patients = Reader.readPatients(new File(PATIENTS_FILE));
+            this.patients = patients;
+        } catch (IOException e) {
+            patients = new Patients();
+        }
+    }
+
+    private void savePatients() {
+        try {
+            Writer writer = new Writer(new File(PATIENTS_FILE));
+            if (patients.getPatientKeySet().size() == 0) {
+                System.err.println("There are no patients registered in the system.\n");
+            } else {
+                for (String key : patients.getPatientKeySet()) {
+                    writer.write(patients.getPatient(key));
+                    writer.close();
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println(PATIENTS_FILE + " not found.");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
 
@@ -132,21 +162,6 @@ public class Biosync {
                     patients.removePatient(personalHealthNumber);
                 }
             }
-        }
-    }
-
-
-    private void savePatients() {
-        try {
-            Writer writer = new Writer(new File(PATIENTS_FILE));
-            for (String key : patients.getPatientKeySet()) {
-                writer.write(patients.getPatient(key));
-                writer.close();
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to save patients' records to" + PATIENTS_FILE);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
     }
 

@@ -1,13 +1,13 @@
 package persistence;
 
 import model.Patient;
+import model.Patients;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 // Represents a reader that can read account data from a file
@@ -17,7 +17,7 @@ public class Reader {
 
     // EFFECTS: returns a hashmap of accounts parsed from file;
     //          throws IOException if an exception is raised when opening / reading from file
-    public static HashMap<String, Patient> readPatients(File file) throws IOException {
+    public static Patients readPatients(File file) throws IOException {
         List<String> fileContent = readFile(file);
         return parseContent(fileContent);
     }
@@ -28,8 +28,8 @@ public class Reader {
         return Files.readAllLines(file.toPath());
     }
 
-    private static HashMap<String, Patient> parseContent(List<String> filePatientContent) {
-        HashMap<String, Patient> patients = new HashMap<>();
+    private static Patients parseContent(List<String> filePatientContent) {
+        Patients patients = new Patients();
         ArrayList<Patient> patientsArray = new ArrayList<>();
 
         for (String line : filePatientContent) {
@@ -38,8 +38,7 @@ public class Reader {
         }
 
         for (Patient patient : patientsArray) {
-            String phn = patient.getPersonalHealthNumber();
-            patients.put(phn, patient);
+            patients.addPatient(patient);
         }
 
         return patients;

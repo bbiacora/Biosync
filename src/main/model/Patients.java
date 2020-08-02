@@ -1,10 +1,8 @@
 package model;
 
-import persistence.Reader;
 import persistence.Savable;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -24,6 +22,10 @@ public class Patients implements Savable {
     public void addPatient(String personalHealthNumber, String firstName, String lastName) {
         Patient patient = new Patient(personalHealthNumber, firstName, lastName);
         patients.put(personalHealthNumber, patient);
+    }
+
+    public void addPatient(Patient patient) {
+        patients.put(patient.getPersonalHealthNumber(), patient);
     }
 
     // MODIFIES: this
@@ -61,21 +63,7 @@ public class Patients implements Savable {
     @Override
     public void save(PrintWriter printWriter) {
         for (String key : getPatientKeySet()) {
-            printWriter.print(key);
-            printWriter.print(Reader.DELIMITER);
-            printWriter.print(getPatient(key).getFirstName());
-            printWriter.print(Reader.DELIMITER);
-            printWriter.print(getPatient(key).getLastName());
-            printWriter.print(Reader.DELIMITER);
-            saveList(printWriter, getPatient(key).getDiagnoses());
-            saveList(printWriter, getPatient(key).getMedications());
-        }
-    }
-
-    private void saveList(PrintWriter printWriter, ArrayList<String> list) {
-        for (int i = 0; i < list.size(); i++) {
-            printWriter.print(list.get(i));
-            printWriter.print(Reader.DELIMITER);
+            getPatient(key).save(printWriter);
         }
     }
 }

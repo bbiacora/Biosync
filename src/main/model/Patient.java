@@ -1,6 +1,10 @@
 package model;
 
+import persistence.Reader;
+
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 // Represents a patient with a personal health number, a first name, a last name,
 // a list of diagnoses, and a list of medications
@@ -17,8 +21,8 @@ public class Patient extends Patients {
         this.personalHealthNumber = personalHealthNumber;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.diagnoses = new ArrayList<>();
-        this.medications = new ArrayList<>();
+        this.diagnoses = new ArrayList<>(Arrays.asList(new String[3]));
+        this.medications = new ArrayList<>(Arrays.asList(new String[3]));
     }
 
     // EFFECTS: sets patient's personal health number, first name and last name;
@@ -90,5 +94,25 @@ public class Patient extends Patients {
     // EFFECTS: returns patient's a list of medications
     public ArrayList<String> getMedications() {
         return medications;
+    }
+
+    public void save(PrintWriter printWriter) {
+        printWriter.print(personalHealthNumber);
+        printWriter.print(Reader.DELIMITER);
+        printWriter.print(firstName);
+        printWriter.print(Reader.DELIMITER);
+        printWriter.print(lastName);
+        printWriter.print(Reader.DELIMITER);
+
+        saveList(printWriter, this.getDiagnoses());
+        saveList(printWriter, this.getMedications());
+    }
+
+    protected void saveList(PrintWriter printWriter, ArrayList<String> list) {
+        for (int i = 0; i < list.size() - 1; i++) {
+            printWriter.print(list.get(i));
+            printWriter.print(Reader.DELIMITER);
+        }
+        printWriter.print(list.get(2));
     }
 }
