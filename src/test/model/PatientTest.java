@@ -15,64 +15,24 @@ class PatientTest {
 
     @Test
     public void testAddDiagnosis() {
-        assertEquals(patient.getDiagnoses().size(), 0);
+        assertFalse(patient.getDiagnoses().contains("HYPERTENSION"));
         patient.addDiagnosis("Hypertension");
-        assertEquals(patient.getDiagnoses().size(), 1);
-        assertTrue(patient.getDiagnoses().contains("Hypertension"));
+        assertTrue(patient.getDiagnoses().contains("HYPERTENSION"));
     }
 
     @Test
-    public void testRemoveDiagnosisCaseMatch() {
-        patient.addDiagnosis("Hypertension");
-        patient.addDiagnosis("Asthma");
-        assertTrue(patient.getDiagnoses().contains("Hypertension"));
+    public void testRemoveDiagnosis() {
+        patient.addDiagnosis("HYPERTENSION");
+        assertTrue(patient.getDiagnoses().contains("HYPERTENSION"));
         patient.removeDiagnosis("Hypertension");
-        assertFalse(patient.getDiagnoses().contains("Hypertension"));
-    }
-
-    @Test
-    public void testRemoveDiagnosisCaseNotMatch() {
-        patient.addDiagnosis("Hypertension");
-        patient.addDiagnosis("Asthma");
-        assertTrue(patient.getDiagnoses().contains("Hypertension"));
-        patient.removeDiagnosis("hypErtension");
-        assertFalse(patient.getDiagnoses().contains("Hypertension"));
-    }
-
-    @Test
-    public void testRemoveDiagnosisNotInList() {
-        patient.addDiagnosis("Hypertension");
-        assertFalse(patient.getDiagnoses().contains("Asthma"));
-        patient.removeDiagnosis("Asthma");
-        assertFalse(patient.getMedications().contains("Asthma"));
+        assertFalse(patient.getDiagnoses().contains("HYPERTENSION"));
     }
 
     @Test
     public void testAddMedication() {
-        assertEquals(patient.getMedications().size(), 0);
-        patient.addMedication("Bumetanide");
-        assertEquals(patient.getMedications().size(), 1);
-        assertTrue(patient.getMedications().contains("Bumetanide"));
-    }
-
-    @Test
-    public void testRemoveMedicationCaseMatch() {
-        patient.addMedication("Bumetanide");
-        patient.addMedication("Furosemide");
-        patient.addMedication("Acebutolol");
-        assertTrue(patient.getMedications().contains("Furosemide"));
-        patient.removeMedication("Furosemide");
-        assertFalse(patient.getMedications().contains("Furosemide"));
-    }
-
-    @Test
-    public void testRemoveMedicationCaseNotMatch() {
-        patient.addMedication("Bumetanide");
-        patient.addMedication("Furosemide");
-        patient.addMedication("Acebutolol");
-        assertTrue(patient.getMedications().contains("Furosemide"));
-        patient.removeMedication("furosEmide");
-        assertFalse(patient.getMedications().contains("Furosemide"));
+        assertFalse(patient.getMedications().contains("BUMETANIDE"));
+        patient.addMedication("bumetanide");
+        assertTrue(patient.getMedications().contains("BUMETANIDE"));
     }
 
     @Test

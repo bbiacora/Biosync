@@ -215,15 +215,15 @@ public class Biosync {
     private void processPatientMenu(String command, String personalHealthNumber) {
         if (command.equals("d")) {
             System.out.println("Enter diagnosis: ");
-            command = input.nextLine().toLowerCase();
+            command = input.nextLine();
             patients.getPatient(personalHealthNumber).addDiagnosis(command);
 //        } else if (command.equals("v")) {
 //            System.out.println("Enter diagnosis to be removed: ");
-//            command = input.nextLine().toLowerCase();
+//            command = input.nextLine();
 //            patients.getPatient(personalHealthNumber).removeDiagnosis(command);
         } else {
             System.out.println("Enter medication: ");
-            command = input.nextLine().toLowerCase();
+            command = input.nextLine();
             patients.getPatient(personalHealthNumber).addMedication(command);
 //        } else {
 //            System.out.println("Enter medication to be removed: ");

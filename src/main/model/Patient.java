@@ -22,6 +22,14 @@ public class Patient extends Patients {
         this.lastName = lastName;
         this.diagnoses = new ArrayList<>();
         this.medications = new ArrayList<>();
+        initializeList(this.diagnoses);
+        initializeList(this.medications);
+    }
+
+    private void initializeList(ArrayList<String> list) {
+        list.add("-");
+        list.add("-");
+        list.add("-");
     }
 
     // EFFECTS: sets patient's personal health number, first name and last name;
@@ -40,6 +48,7 @@ public class Patient extends Patients {
     // MODIFIES: this
     // EFFECTS: adds a diagnosis to patient's list of diagnoses
     public void addDiagnosis(String diagnosis) {
+        diagnosis = diagnosis.toUpperCase();
         for (int i = 0; i < 3; i++) {
             if (diagnoses.get(i).equals("-")) {
                 diagnoses.set(i, diagnosis);
@@ -51,11 +60,9 @@ public class Patient extends Patients {
     // MODIFIES: this
     // EFFECTS: searches for a diagnosis in diagnoses and removes it if found
     public void removeDiagnosis(String diagnosis) {
-        for (int i = 0; i < 3; i++) {
-            if (medications.get(i).equals("-")) {
-                medications.set(i, diagnosis);
-                break;
-            }
+        diagnosis = diagnosis.toUpperCase();
+        if (diagnoses.contains(diagnosis)) {
+            diagnoses.remove(diagnosis);
         }
     }
 
@@ -63,16 +70,21 @@ public class Patient extends Patients {
     // MODIFIES: this
     // EFFECTS: adds a medication to patient's list of medications
     public void addMedication(String medication) {
-        medications.add(medication);
+        medication = medication.toUpperCase();
+        for (int i = 0; i < 3; i++) {
+            if (medications.get(i).equals("-")) {
+                medications.set(i, medication);
+                break;
+            }
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: searches for a medication in medications and removes it if found
     public void removeMedication(String medication) {
-        for (String m : medications) {
-            if (m.equalsIgnoreCase(medication)) {
-                medications.remove(m);
-            }
+        medication = medication.toUpperCase();
+        if (medications.contains(medication)) {
+            medications.remove(medication);
         }
     }
 
