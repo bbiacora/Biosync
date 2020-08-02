@@ -11,11 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 class ReaderTest {
+    Reader reader;
 
     @Test
     void testParsePatientsFile() {
         try {
-            Patients patients = Reader.readPatients(new File("./data/testPatients.txt"));
+            Patients patients = reader.readPatients(new File("./data/testPatients.txt"));
             assertEquals(patients.getPatientKeySet().size(), 2);
             Patient patient = patients.getPatient("56789");
             assertEquals(patient.getFirstName(), "Jane");
