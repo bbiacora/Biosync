@@ -58,7 +58,7 @@ class PatientTest {
     }
 
     @Test
-    public void testAddDiagnosisHasPlaceholder() {
+    void testAddDiagnosisHasPlaceholder() {
         assertFalse(patient.getDiagnoses().contains("HYPERTENSION"));
         patient.addDiagnosis("Hypertension");
         assertTrue(patient.getDiagnoses().contains("HYPERTENSION"));
@@ -66,7 +66,7 @@ class PatientTest {
     }
 
     @Test
-    public void testAddDiagnosisNoPlaceholder() {
+    void testAddDiagnosisNoPlaceholder() {
         patient.addDiagnosis("Hypertension");
         patient.addDiagnosis("Asthma");
         patient.addDiagnosis("Anxiety");
@@ -78,7 +78,7 @@ class PatientTest {
     }
 
     @Test
-    public void testRemoveDiagnosisInList() {
+    void testRemoveDiagnosisInList() {
         patient.addDiagnosis("Hypertension");
         patient.addDiagnosis("Asthma");
         patient.addDiagnosis("Anxiety");
@@ -91,7 +91,7 @@ class PatientTest {
     }
 
     @Test
-    public void testRemoveDiagnosisNotInList() {
+    void testRemoveDiagnosisNotInList() {
         patient.addDiagnosis("Hypertension");
         patient.addDiagnosis("Asthma");
         patient.addDiagnosis("Anxiety");
@@ -102,7 +102,7 @@ class PatientTest {
     }
 
     @Test
-    public void testAddMedicationHasPlaceholder() {
+    void testAddMedicationHasPlaceholder() {
         assertFalse(patient.getMedications().contains("BUMETANIDE"));
         patient.addMedication("bumetanide");
 
