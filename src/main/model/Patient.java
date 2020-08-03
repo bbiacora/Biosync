@@ -23,8 +23,8 @@ public class Patient implements Savable {
         this.lastName = lastName;
         this.diagnoses = new ArrayList<>();
         this.medications = new ArrayList<>();
-        initializeList(this.diagnoses);
-        initializeList(this.medications);
+        maintainList(this.diagnoses);
+        maintainList(this.medications);
     }
 
     // EFFECTS: sets patient's personal health number, first name and last name;
@@ -39,13 +39,13 @@ public class Patient implements Savable {
         this.medications = medications;
     }
 
-    // MODIFIES: this
-    // EFFECTS: adds "-" as placeholders for list's elements
-    // NOTE: this is necessary, so that the the ArrayList can be treated as a fixed list
-    private void initializeList(ArrayList<String> list) {
-        list.add("-");
-        list.add("-");
-        list.add("-");
+    // MODIFIES: list
+    // EFFECTS: adds "-" placeholder to list to maintain specification that list size must be = 3
+    // NOTE: this is necessary, so that the list can be treated as a fixed list
+    public void maintainList(ArrayList<String> list) {
+        while (list.size() != 3) {
+            list.add("-");
+        }
     }
 
     // REQUIRES: diagnoses size = 3
@@ -92,7 +92,7 @@ public class Patient implements Savable {
 
     // REQUIRES: medications size = 3
     // MODIFIES: this
-    // EFFECTS: if diagnosis is in diagnoses, removes diagnosis from diagnoses
+    // EFFECTS: if medication is in medications, removes medication from medications
     //          and replaces it with a "-" placeholder
     public void removeMedication(String medication) {
         medication = medication.toUpperCase();
@@ -157,11 +157,4 @@ public class Patient implements Savable {
         return true;
     }
 
-    // MODIFIES: list
-    // EFFECTS: adds "-" placeholder to list to maintain specification that list size must be = 3
-    public void maintainList(ArrayList<String> list) {
-        while (list.size() != 3) {
-            list.add("-");
-        }
-    }
 }

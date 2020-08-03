@@ -45,7 +45,7 @@ class PatientTest {
     }
 
     @Test
-    void testInitializeList() {
+    void testMaintainListInitialize() {
         assertEquals(patient.getDiagnoses().size(), 3);
         assertEquals(patient.getDiagnoses().get(0), "-");
         assertEquals(patient.getDiagnoses().get(1), "-");
@@ -55,6 +55,27 @@ class PatientTest {
         assertEquals(patient.getMedications().get(0), "-");
         assertEquals(patient.getMedications().get(1), "-");
         assertEquals(patient.getMedications().get(2), "-");
+    }
+
+    @Test
+    void testMaintainListFull() {
+        diagnoses.add("Hypertension");
+        diagnoses.add("Asthma");
+        diagnoses.add("Anxiety");
+
+        assertFalse(diagnoses.contains("-"));
+        patient.maintainList(diagnoses);
+        assertFalse(diagnoses.contains("-"));
+    }
+
+    @Test
+    void testMaintainListNotFull() {
+        diagnoses.add("Hypertension");
+        diagnoses.add("Asthma");
+
+        assertFalse(diagnoses.contains("-"));
+        patient.maintainList(diagnoses);
+        assertTrue(diagnoses.contains("-"));
     }
 
     @Test
@@ -146,28 +167,6 @@ class PatientTest {
         patient.removeMedication("Paroxetine");
         assertFalse(patient.getMedications().contains("PAROXETINE"));
     }
-
-    @Test
-    void testMaintainListFull() {
-        diagnoses.add("Hypertension");
-        diagnoses.add("Asthma");
-        diagnoses.add("Anxiety");
-
-        assertFalse(diagnoses.contains("-"));
-        patient.maintainList(diagnoses);
-        assertFalse(diagnoses.contains("-"));
-    }
-
-    @Test
-    void testMaintainListNotFull() {
-        diagnoses.add("Hypertension");
-        diagnoses.add("Asthma");
-
-        assertFalse(diagnoses.contains("-"));
-        patient.maintainList(diagnoses);
-        assertTrue(diagnoses.contains("-"));
-    }
-
 
     // Properly tested in WriterTest
     @Test
