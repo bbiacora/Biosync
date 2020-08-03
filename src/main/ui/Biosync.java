@@ -209,6 +209,18 @@ public class Biosync {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds/removes a diagnosis or a medication to patient's records
+    private void modifyPatientRecord(String personalHealthNumber) {
+        String command = "";
+        while (!(command.equals("d") || command.equals("v") || command.equals("m") || command.equals("x") || command
+                .equals("b"))) {
+            displayPatientMenu();
+            command = input.nextLine();
+        }
+        processPatientMenu(command, personalHealthNumber);
+    }
+
     // EFFECTS: displays patient menu options to user
     // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     private void displayPatientMenu() {
@@ -217,40 +229,48 @@ public class Biosync {
         System.out.println("\tv ➝ Remove a diagnosis to patient's records");
         System.out.println("\tm ➝ Add a medication to patient's records");
         System.out.println("\tx ➝ Remove a medication to patient's records");
+        System.out.println("\tb ➝ Back to main menu");
     }
 
     // MODIFIES: this
     // EFFECTS: processes user command
     // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     private void processPatientMenu(String command, String personalHealthNumber) {
+        if (command.equals("d") || command.equals("v")) {
+            modifyDiagnoses(command, personalHealthNumber);
+        } else if (command.equals("m") || command.equals("x")) {
+            modifyMedications(command, personalHealthNumber);
+        } else {
+            runBiosync();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds/removes a diagnosis to patient's records
+    private void modifyDiagnoses(String command, String personalHealthNumber) {
         if (command.equals("d")) {
             System.out.println("Enter diagnosis: ");
             command = input.nextLine();
             patients.getPatient(personalHealthNumber).addDiagnosis(command);
-        } else if (command.equals("v")) {
+        } else {
             System.out.println("Enter diagnosis to be removed: ");
             command = input.nextLine();
             patients.getPatient(personalHealthNumber).removeDiagnosis(command);
-        } else if (command.equals("m")) {
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds/removes a medication to patient's records
+    private void modifyMedications(String command, String personalHealthNumber) {
+        if (command.equals("m")) {
             System.out.println("Enter medication: ");
             command = input.nextLine();
             patients.getPatient(personalHealthNumber).addMedication(command);
         } else {
             System.out.println("Enter medication to be removed: ");
-            String response = input.nextLine().toLowerCase();
+            String response = input.nextLine();
             patients.getPatient(personalHealthNumber).removeMedication(response);
         }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds a diagnosis or a medication to patient's records
-    private void modifyPatientRecord(String personalHealthNumber) {
-        String command = "";
-        while (!(command.equals("d") || command.equals("v") || command.equals("m") || command.equals("x"))) {
-            displayPatientMenu();
-            command = input.nextLine();
-        }
-        processPatientMenu(command, personalHealthNumber);
     }
 
     // EFFECTS: prints patient records
@@ -262,6 +282,7 @@ public class Biosync {
         formatRecords(patients.getPatient(personalHealthNumber).getDiagnoses());
         System.out.println("Medications: ");
         formatRecords(patients.getPatient(personalHealthNumber).getMedications());
+        System.out.println();
     }
 
     // EFFECTS: prints a bulleted list

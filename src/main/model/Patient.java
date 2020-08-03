@@ -90,7 +90,7 @@ public class Patient implements Savable {
         }
     }
 
-    // REQUIRES: diagnoses size = 3
+    // REQUIRES: medications size = 3
     // MODIFIES: this
     // EFFECTS: if diagnosis is in diagnoses, removes diagnosis from diagnoses
     //          and replaces it with a "-" placeholder
