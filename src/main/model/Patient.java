@@ -40,7 +40,7 @@ public class Patient implements Savable {
     }
 
     // MODIFIES: list
-    // EFFECTS: adds "-" placeholder to list to maintain specification that list size must be = 3
+    // EFFECTS: adds "-" placeholder to list
     // NOTE: this is necessary, so that the list can be treated as a fixed list
     public void maintainList(ArrayList<String> list) {
         while (list.size() != 3) {

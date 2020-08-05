@@ -157,7 +157,7 @@ class PatientTest {
     }
 
     @Test
-    public void testRemoveMedicationNotinList() {
+    public void testRemoveMedicationNotInList() {
         patient.addMedication("Bumetanide");
         patient.addMedication("Acebutolol");
         patient.addMedication("Fluoxetine");
