@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 // Patient management application
-public class Biosync {
+public class BiosyncConsole {
     private static final String PATIENTS_FILE = "./data/patients.txt";
     private Scanner input;
     private Patients patients;
@@ -20,7 +20,7 @@ public class Biosync {
     // EFFECTS: prints welcome message;
     //          loads patients from PATIENTS_FILE;
     //          runs application;
-    public Biosync() {
+    public BiosyncConsole() {
         System.out.println("WELCOME TO BIOSYNC!");
         loadPatients();
         runBiosync();
@@ -81,8 +81,7 @@ public class Biosync {
     // Refernce: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     private void loadPatients() {
         try {
-            Patients patients = Reader.readPatients(new File(PATIENTS_FILE));
-            this.patients = patients;
+            patients = Reader.readPatients(new File(PATIENTS_FILE));
         } catch (IOException e) {
             patients = new Patients();
         }

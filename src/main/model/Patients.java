@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Set;
 
-// Represents a map of patients to be handled by Biosync
+// Represents a map of patients to be handled by BiosyncConsole
 public class Patients implements Savable {
     private HashMap<String, Patient> patients;
 
