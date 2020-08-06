@@ -6,6 +6,7 @@ import persistence.Reader;
 import persistence.Writer;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,13 +20,14 @@ public class BiosyncGUI extends JFrame {
     private static final int HEIGHT = 600;
 
     private PatientsTable patientsTable;
+    private AddPatientsForm form;
 
     private Patients patients;
     private ArrayList<Patient> patientsList;
 
     public BiosyncGUI() {
         super("BIOSYNC");
-        setSize(WIDTH, HEIGHT);
+//        setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         setResizable(false);
@@ -33,10 +35,16 @@ public class BiosyncGUI extends JFrame {
 
         loadPatients();
 
-        patientsTable = new PatientsTable(patientsList);
-        patientsTable.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        add(patientsTable);
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(new EmptyBorder(new Insets(20, 20, 20, 20)));
 
+        patientsTable = new PatientsTable(patientsList);
+        form = new AddPatientsForm();
+        panel.add(patientsTable);
+        panel.add(form);
+
+        add(panel);
         pack();
         setVisible(true);
     }

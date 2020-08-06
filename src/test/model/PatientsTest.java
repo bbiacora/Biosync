@@ -19,7 +19,7 @@ class PatientsTest {
     void setUp() throws FileNotFoundException {
         patients = new Patients();
         patient = new Patient("55555", "Rob", "Roberts");
-        printWriter = new PrintWriter(new File("./data/patients.txt"));
+        printWriter = new PrintWriter(new File("./data/testPatients3.txt"));
     }
 
     @Test
