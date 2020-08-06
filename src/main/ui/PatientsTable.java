@@ -17,12 +17,10 @@ public class PatientsTable extends JPanel {
 
     public PatientsTable(ArrayList<Patient> patientsList) {
         tableSetUp(patientsList);
-        setSize(WIDTH, HEIGHT);
     }
 
     // Reference: https://stackoverflow.com/questions/1990817/how-to-make-a-jtable-non-editable
     private void tableSetUp(ArrayList<Patient> patientsList) {
-//        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         table = new JTable();
         model = new DefaultTableModel() {
             @Override

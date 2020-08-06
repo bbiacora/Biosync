@@ -25,6 +25,7 @@ public class BiosyncGUI extends JFrame {
     private Patients patients;
     private ArrayList<Patient> patientsList;
 
+    // Reference: https://examples.javacodegeeks.com/desktop-java/swing/java-swing-boxlayout-example/
     public BiosyncGUI() {
         super("BIOSYNC");
 //        setSize(WIDTH, HEIGHT);
