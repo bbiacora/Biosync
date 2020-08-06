@@ -1,31 +1,43 @@
 package ui;
 
+import model.Patient;
 import model.Patients;
 import persistence.Reader;
 import persistence.Writer;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 public class BiosyncGUI extends JFrame {
     private static final String PATIENTS_FILE = "./data/patients.txt";
     private static final int WIDTH = 600;
     private static final int HEIGHT = 600;
 
+    private PatientsTable patientsTable;
+
     private Patients patients;
+    private ArrayList<Patient> patientsList;
 
     public BiosyncGUI() {
         super("BIOSYNC");
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
         setResizable(false);
         createMenuBar();
 
         loadPatients();
 
+        patientsTable = new PatientsTable(patientsList);
+        patientsTable.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        add(patientsTable);
+
+        pack();
         setVisible(true);
     }
 
@@ -55,9 +67,9 @@ public class BiosyncGUI extends JFrame {
             writer.write(patients);
             writer.close();
         } catch (FileNotFoundException e) {
-            System.out.println(PATIENTS_FILE + " not found.");
+            //System.out.println(PATIENTS_FILE + " not found.");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -68,6 +80,7 @@ public class BiosyncGUI extends JFrame {
     private void loadPatients() {
         try {
             patients = Reader.readPatients(new File(PATIENTS_FILE));
+            patientsList = patients.getPatientsList();
         } catch (IOException e) {
             patients = new Patients();
         }

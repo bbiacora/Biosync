@@ -3,6 +3,7 @@ package model;
 import persistence.Savable;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -42,6 +43,11 @@ public class Patients implements Savable {
         } else {
             return null;
         }
+    }
+
+    // EFFECTS: returns a list of values of patients
+    public ArrayList<Patient> getPatientsList() {
+        return new ArrayList<>(patients.values());
     }
 
     // EFFECTS: returns patient key set

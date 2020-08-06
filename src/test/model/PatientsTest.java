@@ -64,6 +64,21 @@ class PatientsTest {
     }
 
     @Test
+    void testGetPatients() {
+        Patient p1 = new Patient("01234", "John", "Smith");
+        Patient p2 = new Patient("987650", "Jane", "Doe");
+        Patient p3 = new Patient("11112", "James", "Johnson");
+        patients.addPatient(p1);
+        patients.addPatient(p2);
+        patients.addPatient(p3);
+
+        assertEquals(patients.getPatientsList().size(), 3);
+        assertTrue(patients.getPatientsList().contains(p1));
+        assertTrue(patients.getPatientsList().contains(p2));
+        assertTrue(patients.getPatientsList().contains(p3));
+    }
+
+    @Test
     void testGetPatientKeySet() {
         assertFalse(patients.getPatientKeySet().contains("01234"));
         assertFalse(patients.getPatientKeySet().contains("98765"));
