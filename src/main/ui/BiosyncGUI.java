@@ -4,6 +4,9 @@ import model.Patient;
 import model.Patients;
 import persistence.Reader;
 import persistence.Writer;
+import ui.panels.AddPatientPanel;
+import ui.panels.ButtonsPanel;
+import ui.panels.ViewPatientsPanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -19,8 +22,9 @@ public class BiosyncGUI extends JFrame {
     private static final int WIDTH = 600;
     private static final int HEIGHT = 600;
 
-    private PatientsTable patientsTable;
-    private AddPatientsForm form;
+    private ViewPatientsPanel viewPatientsPanel;
+    private AddPatientPanel form;
+    private ButtonsPanel buttons;
 
     private Patients patients;
     private ArrayList<Patient> patientsList;
@@ -28,7 +32,7 @@ public class BiosyncGUI extends JFrame {
     // Reference: https://examples.javacodegeeks.com/desktop-java/swing/java-swing-boxlayout-example/
     public BiosyncGUI() {
         super("BIOSYNC");
-//        setSize(WIDTH, HEIGHT);
+        setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         setResizable(false);
@@ -40,10 +44,13 @@ public class BiosyncGUI extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(new EmptyBorder(new Insets(20, 20, 20, 20)));
 
-        patientsTable = new PatientsTable(patientsList);
-        form = new AddPatientsForm();
-        panel.add(patientsTable);
+        viewPatientsPanel = new ViewPatientsPanel(patientsList);
+        form = new AddPatientPanel();
+        buttons = new ButtonsPanel();
+        panel.add(viewPatientsPanel);
+        panel.add(buttons);
         panel.add(form);
+
 
         add(panel);
         pack();

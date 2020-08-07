@@ -1,4 +1,4 @@
-package ui;
+package ui.panels;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -6,20 +6,20 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AddPatientsForm extends JPanel {
-    private GridBagConstraints gc;
+public class AddPatientPanel extends JPanel {
+    private GridBagConstraints constraints;
 
-    public AddPatientsForm() {
+    public AddPatientPanel() {
         Dimension size = getPreferredSize();
         size.height = 150;
         setPreferredSize(size);
 
         setLayout(new GridBagLayout());
-        gc = new GridBagConstraints();
+        constraints = new GridBagConstraints();
 
         borderSetUp();
         labelSetUp();
-        fieldSetUp();
+        textFieldSetUp();
         buttonSetUp();
     }
 
@@ -37,31 +37,31 @@ public class AddPatientsForm extends JPanel {
         JLabel firstNameLabel = new JLabel("First name: ");
         JLabel lastNameLabel = new JLabel("Last name: ");
 
-        gc.anchor = GridBagConstraints.LINE_START;
-        gc.weighty = 1;
-        gc.gridx = 0;
-        gc.gridy = 1;
-        add(phnLabel, gc);
-        gc.gridy = 2;
-        add(firstNameLabel, gc);
-        gc.gridy = 3;
-        add(lastNameLabel, gc);
+        constraints.anchor = GridBagConstraints.LINE_START;
+        constraints.weighty = 1;
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        add(phnLabel, constraints);
+        constraints.gridy = 2;
+        add(firstNameLabel, constraints);
+        constraints.gridy = 3;
+        add(lastNameLabel, constraints);
     }
 
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
-    private void fieldSetUp() {
+    private void textFieldSetUp() {
         JTextField phnField = new JTextField(15);
         JTextField firstNameField = new JTextField(15);
         JTextField lastNameField = new JTextField(15);
 
-        gc.anchor = GridBagConstraints.LINE_START;
-        gc.gridx = 1;
-        gc.gridy = 1;
-        add(phnField, gc);
-        gc.gridy = 2;
-        add(firstNameField, gc);
-        gc.gridy = 3;
-        add(lastNameField, gc);
+        constraints.anchor = GridBagConstraints.LINE_START;
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        add(phnField, constraints);
+        constraints.gridy = 2;
+        add(firstNameField, constraints);
+        constraints.gridy = 3;
+        add(lastNameField, constraints);
     }
 
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
@@ -75,9 +75,9 @@ public class AddPatientsForm extends JPanel {
         });
 
         //// Final row ////
-        gc.anchor = GridBagConstraints.LINE_END;
-        gc.gridy = 4;
-        add(addButton, gc);
+        constraints.anchor = GridBagConstraints.LINE_END;
+        constraints.gridy = 4;
+        add(addButton, constraints);
     }
 }
 

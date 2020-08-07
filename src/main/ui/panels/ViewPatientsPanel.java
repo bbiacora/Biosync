@@ -1,27 +1,27 @@
-package ui;
+package ui.panels;
 
 import model.Patient;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.util.ArrayList;
 
-public class PatientsTable extends JPanel {
-    private static final int WIDTH = 600;
-    private static final int HEIGHT = 300;
+public class ViewPatientsPanel extends JPanel {
     private static final String[] HEADERS = {"Personal Health Number", "Last name", "First Name"};
-
     private JTable table;
     private DefaultTableModel model;
     private JScrollPane scroll;
 
-    public PatientsTable(ArrayList<Patient> patientsList) {
+    public ViewPatientsPanel(ArrayList<Patient> patientsList) {
         tableSetUp(patientsList);
+//        buttonsSetUp();
     }
 
     // Reference: https://stackoverflow.com/questions/1990817/how-to-make-a-jtable-non-editable
     private void tableSetUp(ArrayList<Patient> patientsList) {
         table = new JTable();
+        table.setPreferredScrollableViewportSize(new Dimension(600, 100));
         model = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -33,6 +33,17 @@ public class PatientsTable extends JPanel {
         scroll = new JScrollPane(table);
         add(scroll);
     }
+
+//    private void buttonsSetUp() {
+//        FlowLayout flowLayout = new FlowLayout();
+//        JButton removeButton = new JButton("Remove");
+//        JButton updateButton = new JButton("Update");
+//
+//        flowLayout.setAlignment(FlowLayout.LEFT);
+//        add(removeButton, flowLayout);
+//        flowLayout.setAlignment(FlowLayout.RIGHT);
+//        add(updateButton, flowLayout);
+//    }
 
     // MODIFIES:this
     // EFFECTS: populates table with patient information of patients in an ArrayList
