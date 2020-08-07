@@ -16,6 +16,7 @@ public class AddPatientPanel extends JPanel {
 
         setLayout(new GridBagLayout());
         constraints = new GridBagConstraints();
+        constraints.insets = new Insets(10, 0, 0, 0);
 
         borderSetUp();
         labelSetUp();
@@ -25,14 +26,14 @@ public class AddPatientPanel extends JPanel {
 
 
     private void borderSetUp() {
-        Border border = BorderFactory.createLineBorder(Color.GRAY);
-        border = BorderFactory.createTitledBorder(border, "ADD A NEW PATIENT");
+        Border border = BorderFactory.createEtchedBorder();
+        border = BorderFactory.createTitledBorder(border, "ADD PATIENT");
         setBorder(border);
     }
 
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
     private void labelSetUp() {
-        JLabel phnLabel = new JLabel("Personal Health Number: ");
+        JLabel phnLabel = new JLabel("Personal Health Number:   ");
         JLabel firstNameLabel = new JLabel("First name: ");
         JLabel lastNameLabel = new JLabel("Last name: ");
 
@@ -73,9 +74,9 @@ public class AddPatientPanel extends JPanel {
             }
         });
 
-        //// Final row ////
         constraints.anchor = GridBagConstraints.LINE_END;
         constraints.gridy = 4;
+        constraints.insets = new Insets(5, 0, 5, 0);
         add(addButton, constraints);
     }
 }

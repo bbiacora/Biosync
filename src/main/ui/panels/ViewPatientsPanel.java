@@ -9,12 +9,13 @@ import java.util.ArrayList;
 
 public class ViewPatientsPanel extends JPanel {
     private static final String[] HEADERS = {"Personal Health Number", "Last name", "First Name"};
-    private DefaultTableModel model;
     private GridBagConstraints constraints;
+    private DefaultTableModel model;
 
     public ViewPatientsPanel(ArrayList<Patient> patientsList) {
         setLayout(new GridBagLayout());
         constraints = new GridBagConstraints();
+        constraints.insets = new Insets(0, 0, 15, 0);
 
         tableSetUp(patientsList);
         buttonsSetUp();
@@ -23,7 +24,8 @@ public class ViewPatientsPanel extends JPanel {
     // Reference: https://stackoverflow.com/questions/1990817/how-to-make-a-jtable-non-editable
     private void tableSetUp(ArrayList<Patient> patientsList) {
         JTable table = new JTable();
-        table.setPreferredScrollableViewportSize(new Dimension(600, 100));
+        table.setPreferredScrollableViewportSize(new Dimension(550, 100));
+        table.setRowHeight(25);
         model = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -33,7 +35,7 @@ public class ViewPatientsPanel extends JPanel {
         model.setColumnIdentifiers(HEADERS);
         showPatientsInTable(table, patientsList);
         JScrollPane scroll = new JScrollPane(table);
-        constraints.gridx = 1;
+        constraints.gridx = 0;
         constraints.gridy = 0;
         add(scroll, constraints);
     }
@@ -43,11 +45,11 @@ public class ViewPatientsPanel extends JPanel {
         JButton updateButton = new JButton(" Update ");
 
         constraints.anchor = GridBagConstraints.LINE_END;
-        constraints.gridx = 1;
+        constraints.gridx = 0;
         constraints.gridy = 1;
         add(removeButton, constraints);
         constraints.anchor = GridBagConstraints.LINE_START;
-        constraints.gridx = 1;
+        constraints.gridx = 0;
         constraints.gridy = 1;
         add(updateButton, constraints);
     }

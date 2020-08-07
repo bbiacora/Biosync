@@ -18,8 +18,8 @@ import java.util.ArrayList;
 
 public class BiosyncGUI extends JFrame {
     private static final String PATIENTS_FILE = "./data/patients.txt";
-    private static final int WIDTH = 600;
-    private static final int HEIGHT = 600;
+//    private static final int WIDTH = 600;
+//    private static final int HEIGHT = 600;
 
     private Patients patients;
     private ArrayList<Patient> patientsList;
@@ -27,7 +27,7 @@ public class BiosyncGUI extends JFrame {
     // Reference: https://examples.javacodegeeks.com/desktop-java/swing/java-swing-boxlayout-example/
     public BiosyncGUI() {
         super("BIOSYNC");
-        setSize(WIDTH, HEIGHT);
+//        setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         setResizable(false);
