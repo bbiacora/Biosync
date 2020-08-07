@@ -44,7 +44,6 @@ public class BiosyncGUI extends JFrame {
         panel.add(viewPatientsPanel);
         panel.add(form);
 
-
         add(panel);
         pack();
         setVisible(true);
