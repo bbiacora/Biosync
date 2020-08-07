@@ -28,7 +28,6 @@ public class AddPatientPanel extends JPanel {
         Border border = BorderFactory.createLineBorder(Color.GRAY);
         border = BorderFactory.createTitledBorder(border, "ADD A NEW PATIENT");
         setBorder(border);
-
     }
 
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html

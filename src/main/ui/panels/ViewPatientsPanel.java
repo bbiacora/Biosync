@@ -9,18 +9,20 @@ import java.util.ArrayList;
 
 public class ViewPatientsPanel extends JPanel {
     private static final String[] HEADERS = {"Personal Health Number", "Last name", "First Name"};
-    private JTable table;
     private DefaultTableModel model;
-    private JScrollPane scroll;
+    private GridBagConstraints constraints;
 
     public ViewPatientsPanel(ArrayList<Patient> patientsList) {
+        setLayout(new GridBagLayout());
+        constraints = new GridBagConstraints();
+
         tableSetUp(patientsList);
-//        buttonsSetUp();
+        buttonsSetUp();
     }
 
     // Reference: https://stackoverflow.com/questions/1990817/how-to-make-a-jtable-non-editable
     private void tableSetUp(ArrayList<Patient> patientsList) {
-        table = new JTable();
+        JTable table = new JTable();
         table.setPreferredScrollableViewportSize(new Dimension(600, 100));
         model = new DefaultTableModel() {
             @Override
@@ -30,20 +32,25 @@ public class ViewPatientsPanel extends JPanel {
         };
         model.setColumnIdentifiers(HEADERS);
         showPatientsInTable(table, patientsList);
-        scroll = new JScrollPane(table);
-        add(scroll);
+        JScrollPane scroll = new JScrollPane(table);
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        add(scroll, constraints);
     }
 
-//    private void buttonsSetUp() {
-//        FlowLayout flowLayout = new FlowLayout();
-//        JButton removeButton = new JButton("Remove");
-//        JButton updateButton = new JButton("Update");
-//
-//        flowLayout.setAlignment(FlowLayout.LEFT);
-//        add(removeButton, flowLayout);
-//        flowLayout.setAlignment(FlowLayout.RIGHT);
-//        add(updateButton, flowLayout);
-//    }
+    private void buttonsSetUp() {
+        JButton removeButton = new JButton("Remove");
+        JButton updateButton = new JButton(" Update ");
+
+        constraints.anchor = GridBagConstraints.LINE_END;
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        add(removeButton, constraints);
+        constraints.anchor = GridBagConstraints.LINE_START;
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        add(updateButton, constraints);
+    }
 
     // MODIFIES:this
     // EFFECTS: populates table with patient information of patients in an ArrayList

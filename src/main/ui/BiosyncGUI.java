@@ -5,7 +5,6 @@ import model.Patients;
 import persistence.Reader;
 import persistence.Writer;
 import ui.panels.AddPatientPanel;
-import ui.panels.ButtonsPanel;
 import ui.panels.ViewPatientsPanel;
 
 import javax.swing.*;
@@ -21,10 +20,6 @@ public class BiosyncGUI extends JFrame {
     private static final String PATIENTS_FILE = "./data/patients.txt";
     private static final int WIDTH = 600;
     private static final int HEIGHT = 600;
-
-    private ViewPatientsPanel viewPatientsPanel;
-    private AddPatientPanel form;
-    private ButtonsPanel buttons;
 
     private Patients patients;
     private ArrayList<Patient> patientsList;
@@ -44,11 +39,9 @@ public class BiosyncGUI extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(new EmptyBorder(new Insets(20, 20, 20, 20)));
 
-        viewPatientsPanel = new ViewPatientsPanel(patientsList);
-        form = new AddPatientPanel();
-        buttons = new ButtonsPanel();
+        ViewPatientsPanel viewPatientsPanel = new ViewPatientsPanel(patientsList);
+        AddPatientPanel form = new AddPatientPanel();
         panel.add(viewPatientsPanel);
-        panel.add(buttons);
         panel.add(form);
 
 
