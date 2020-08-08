@@ -1,6 +1,5 @@
 package ui;
 
-import model.Patient;
 import model.Patients;
 import persistence.Reader;
 import persistence.Writer;
@@ -14,15 +13,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 
 public class BiosyncGUI extends JFrame {
     private static final String PATIENTS_FILE = "./data/patients.txt";
 //    private static final int WIDTH = 600;
 //    private static final int HEIGHT = 600;
-
     private Patients patients;
-    private ArrayList<Patient> patientsList;
 
     // Reference: https://examples.javacodegeeks.com/desktop-java/swing/java-swing-boxlayout-example/
     public BiosyncGUI() {
@@ -39,7 +35,7 @@ public class BiosyncGUI extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(new EmptyBorder(new Insets(20, 20, 20, 20)));
 
-        ViewPatientsPanel viewPatientsPanel = new ViewPatientsPanel(patientsList);
+        ViewPatientsPanel viewPatientsPanel = new ViewPatientsPanel(patients);
         AddPatientPanel form = new AddPatientPanel();
         panel.add(viewPatientsPanel);
         panel.add(form);
@@ -88,7 +84,6 @@ public class BiosyncGUI extends JFrame {
     private void loadPatients() {
         try {
             patients = Reader.readPatients(new File(PATIENTS_FILE));
-            patientsList = patients.getPatientsList();
         } catch (IOException e) {
             patients = new Patients();
         }

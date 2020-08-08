@@ -24,13 +24,16 @@ public class AddPatientPanel extends JPanel {
         buttonSetUp();
     }
 
-
+    // MODIFIES:
+    // EFFECTS:
     private void borderSetUp() {
         Border border = BorderFactory.createEtchedBorder();
         border = BorderFactory.createTitledBorder(border, "ADD PATIENT");
         setBorder(border);
     }
 
+    // MODIFIES:
+    // EFFECTS:
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
     private void labelSetUp() {
         JLabel phnLabel = new JLabel("Personal Health Number:   ");
@@ -48,6 +51,8 @@ public class AddPatientPanel extends JPanel {
         add(lastNameLabel, constraints);
     }
 
+    // MODIFIES:
+    // EFFECTS:
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
     private void textFieldSetUp() {
         JTextField phnField = new JTextField(15);
@@ -64,6 +69,8 @@ public class AddPatientPanel extends JPanel {
         add(lastNameField, constraints);
     }
 
+    // MODIFIES:
+    // EFFECTS:
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
     private void buttonSetUp() {
         JButton addButton = new JButton("Add");
