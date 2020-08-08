@@ -1,5 +1,8 @@
 package ui.panels;
 
+import model.Patient;
+import model.Patients;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -8,8 +11,12 @@ import java.awt.event.ActionListener;
 
 public class AddPatientPanel extends JPanel {
     private GridBagConstraints constraints;
+    private JTextField phnTextField;
+    private JTextField firstNameTextField;
+    private JTextField lastNameTextField;
+    private Patients patients;
 
-    public AddPatientPanel() {
+    public AddPatientPanel(Patients patients) {
         Dimension size = getPreferredSize();
         size.height = 150;
         setPreferredSize(size);
@@ -17,6 +24,8 @@ public class AddPatientPanel extends JPanel {
         setLayout(new GridBagLayout());
         constraints = new GridBagConstraints();
         constraints.insets = new Insets(10, 0, 0, 0);
+
+        this.patients = patients;
 
         borderSetUp();
         labelSetUp();
@@ -55,18 +64,18 @@ public class AddPatientPanel extends JPanel {
     // EFFECTS:
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
     private void textFieldSetUp() {
-        JTextField phnField = new JTextField(15);
-        JTextField firstNameField = new JTextField(15);
-        JTextField lastNameField = new JTextField(15);
+        phnTextField = new JTextField(15);
+        firstNameTextField = new JTextField(15);
+        lastNameTextField = new JTextField(15);
 
         constraints.anchor = GridBagConstraints.LINE_START;
         constraints.gridx = 1;
         constraints.gridy = 1;
-        add(phnField, constraints);
+        add(phnTextField, constraints);
         constraints.gridy = 2;
-        add(firstNameField, constraints);
+        add(firstNameTextField, constraints);
         constraints.gridy = 3;
-        add(lastNameField, constraints);
+        add(lastNameTextField, constraints);
     }
 
     // MODIFIES:
@@ -74,17 +83,23 @@ public class AddPatientPanel extends JPanel {
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
     private void buttonSetUp() {
         JButton addButton = new JButton("Add");
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO
-            }
-        });
-
         constraints.anchor = GridBagConstraints.LINE_END;
         constraints.gridy = 4;
         constraints.insets = new Insets(5, 0, 5, 0);
         add(addButton, constraints);
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String personalHealthNumer = phnTextField.getText();
+                String firstName = firstNameTextField.getText();
+                String lastName = lastNameTextField.getText();
+                Patient patient = new Patient(personalHealthNumer, firstName, lastName);
+                patients.addPatient(patient);
+                phnTextField.setText("");
+                firstNameTextField.setText("");
+                lastNameTextField.setText("");
+            }
+        });
     }
 }
 

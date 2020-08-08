@@ -27,9 +27,8 @@ public class ViewPatientsPanel extends JPanel {
         constraints.insets = new Insets(0, 0, 15, 0);
 
         this.patients = patients;
-        patientsList = patients.getPatientsList();
 
-        tableSetUp(patientsList);
+        tableSetUp(patients);
         buttonsSetUp();
     }
 
@@ -37,7 +36,7 @@ public class ViewPatientsPanel extends JPanel {
     // EFFECTS:
     // Reference: https://stackoverflow.com/questions/20012772/how-to-populate-a-jtable-from-an-arraylist
     //            https://stackoverflow.com/questions/1990817/how-to-make-a-jtable-non-editable
-    private void tableSetUp(ArrayList<Patient> patientsList) {
+    private void tableSetUp(Patients patients) {
         table = new JTable();
         table.setPreferredScrollableViewportSize(new Dimension(TABLE_WIDTH, TABLE_HEIGHT));
         table.getTableHeader().setReorderingAllowed(false);
@@ -51,7 +50,7 @@ public class ViewPatientsPanel extends JPanel {
             }
         };
         model.setColumnIdentifiers(HEADERS);
-        showPatientsInTable(table, patientsList);
+        showPatientsInTable(table, patients);
         JScrollPane scroll = new JScrollPane(table);
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -73,8 +72,15 @@ public class ViewPatientsPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int row = table.getSelectedRow();
-                String value = table.getModel().getValueAt(row, 0).toString();
-                confirmRemoval(value);
+                String personalHealthNumber = table.getModel().getValueAt(row, 0).toString();
+                confirmRemoval(personalHealthNumber);
+            }
+        });
+
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showPatientsInTable(table, patients);
             }
         });
     }
@@ -82,7 +88,10 @@ public class ViewPatientsPanel extends JPanel {
     // MODIFIES: this
     // EFFECTS: populates table with patient information of patients in an ArrayList
     // Reference: https://stackoverflow.com/questions/20012772/how-to-populate-a-jtable-from-an-arraylist
-    public void showPatientsInTable(JTable table, ArrayList<Patient> patientsList) {
+    //            https://stackoverflow.com/questions/3879610/how-to-clear-contents-of-a-jtable
+    public void showPatientsInTable(JTable table, Patients patients) {
+        patientsList = patients.getPatientsList();
+        model.setRowCount(0);
         for (Patient p : patientsList) {
             model.addRow(new Object[]{p.getPersonalHealthNumber(), p.getLastName() + ", " + p.getFirstName()});
         }
@@ -91,11 +100,11 @@ public class ViewPatientsPanel extends JPanel {
 
     // Reference: https://www.tutorialspoint.com/how-to-create-a-confirmation-dialog-box-in-java
     //            https://stackoverflow.com/a/38981623
-    public void confirmRemoval(String value) {
+    public void confirmRemoval(String personalHealthNumber) {
         int response = JOptionPane.showConfirmDialog(null,
                 "Are you sure? This process cannot be undone.", " Confirm", JOptionPane.OK_CANCEL_OPTION);
         if (response == 0) {
-//            patients.removePatient(value);
+            patients.removePatient(personalHealthNumber);
         }
     }
 }

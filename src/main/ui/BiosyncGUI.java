@@ -36,7 +36,7 @@ public class BiosyncGUI extends JFrame {
         panel.setBorder(new EmptyBorder(new Insets(20, 20, 20, 20)));
 
         ViewPatientsPanel viewPatientsPanel = new ViewPatientsPanel(patients);
-        AddPatientPanel form = new AddPatientPanel();
+        AddPatientPanel form = new AddPatientPanel(patients);
         panel.add(viewPatientsPanel);
         panel.add(form);
 
