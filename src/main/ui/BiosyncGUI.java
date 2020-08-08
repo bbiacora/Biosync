@@ -3,7 +3,7 @@ package ui;
 import model.Patients;
 import persistence.Reader;
 import persistence.Writer;
-import ui.panels.AddPatientPanel;
+import ui.panels.RegisterPatientPanel;
 import ui.panels.ViewPatientsPanel;
 
 import javax.swing.*;
@@ -16,37 +16,45 @@ import java.io.UnsupportedEncodingException;
 
 public class BiosyncGUI extends JFrame {
     private static final String PATIENTS_FILE = "./data/patients.txt";
-//    private static final int WIDTH = 600;
-//    private static final int HEIGHT = 600;
+    private static final String FAVICON_IMAGE = "./data/image/favicon.png";
     private Patients patients;
 
     // Reference: https://examples.javacodegeeks.com/desktop-java/swing/java-swing-boxlayout-example/
     public BiosyncGUI() {
         super("BIOSYNC");
-//        setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
-        setResizable(false);
-        createMenuBar();
+        frameSetUp();
+        menuBarSetUp();
 
         loadPatients();
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(new EmptyBorder(new Insets(20, 20, 20, 20)));
-
         ViewPatientsPanel viewPatientsPanel = new ViewPatientsPanel(patients);
-        AddPatientPanel form = new AddPatientPanel(patients);
+        RegisterPatientPanel registerPatientPanel = new RegisterPatientPanel(patients);
         panel.add(viewPatientsPanel);
-        panel.add(form);
+        panel.add(registerPatientPanel);
 
         add(panel);
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
+    // MODIFIES:
+    // EFFECTS:
+    public void frameSetUp() {
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+        setResizable(false);
+        ImageIcon favicon = new ImageIcon(FAVICON_IMAGE);
+        setIconImage(favicon.getImage());
+    }
+
+    // MODIFIES:
+    // EFFECTS:
     // Reference: http://zetcode.com/javaswing/menusandtoolbars/
-    private void createMenuBar() {
+    private void menuBarSetUp() {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
 
@@ -71,9 +79,9 @@ public class BiosyncGUI extends JFrame {
             writer.write(patients);
             writer.close();
         } catch (FileNotFoundException e) {
-            //System.out.println(PATIENTS_FILE + " not found.");
+            System.out.println(PATIENTS_FILE + " not found.");
         } catch (UnsupportedEncodingException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 

@@ -15,7 +15,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class ViewPatientsPanel extends JPanel {
-    private static final String SOUND_FILE = "./data/popupSound.wav";
+    private static final String SOUND_FILE = "./data/sound/popupSound.wav";
+    private static final String QUESTION_IMAGE = "./data/image/questionIcon.png";
     private static final String[] HEADERS = {"Personal Health Number", "Patient's Name"};
     private static final int TABLE_WIDTH = 550;
     private static final int TABLE_HEIGHT = 100;
@@ -25,6 +26,7 @@ public class ViewPatientsPanel extends JPanel {
     private Patients patients;
     private ArrayList<Patient> patientsList;
 
+    // MODIFIES:
     // EFFECTS:
     public ViewPatientsPanel(Patients patients) {
         setLayout(new GridBagLayout());
@@ -46,6 +48,8 @@ public class ViewPatientsPanel extends JPanel {
         table = new JTable();
         table.setPreferredScrollableViewportSize(new Dimension(TABLE_WIDTH, TABLE_HEIGHT));
         table.getTableHeader().setReorderingAllowed(false);
+        table.getTableHeader().setBackground(new Color(186, 221, 255));
+        table.getTableHeader().setFont(new Font("Dialog", Font.BOLD, 12));
         table.setRowHeight(25);
         table.setIntercellSpacing(new Dimension(20, 0));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -80,12 +84,14 @@ public class ViewPatientsPanel extends JPanel {
                     playSound();
                     confirmRemoval(personalHealthNumber);
                 } catch (Exception e) {
-                    System.out.println("Selection was not made.");
+                    System.err.println("Selection was not made.");
                 }
             }
         });
     }
 
+    // MODIFIES:
+    // EFFECTS:
     private void updateButtonSetUp() {
         JButton updateButton = new JButton(" Update ");
         constraints.anchor = GridBagConstraints.LINE_START;
@@ -116,15 +122,19 @@ public class ViewPatientsPanel extends JPanel {
     // Reference: https://www.tutorialspoint.com/how-to-create-a-confirmation-dialog-box-in-java
     //            https://stackoverflow.com/a/38981623
     private void confirmRemoval(String personalHealthNumber) {
+        ImageIcon icon = new ImageIcon(QUESTION_IMAGE);
         int response = JOptionPane.showConfirmDialog(null,
                 "Are you sure? This process cannot be undone.",
-                " Confirm", JOptionPane.OK_CANCEL_OPTION);
+                "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, icon);
 
         if (response == 0) {
             patients.removePatient(personalHealthNumber);
         }
     }
 
+    // MODIFIES:
+    // EFFECTS:
+    // Reference: https://stackoverflow.com/a/15526480
     public void playSound() {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(SOUND_FILE).getAbsoluteFile());
@@ -132,7 +142,7 @@ public class ViewPatientsPanel extends JPanel {
             clip.open(audioInputStream);
             clip.start();
         } catch (Exception e) {
-            System.out.println("Sound file not found.");
+            System.err.println("Sound file not found.");
         }
     }
 }
