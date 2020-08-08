@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class ViewPatientsPanel extends JPanel {
     private static final String SOUND_FILE = "./data/sound/popupSound.wav";
-    private static final String QUESTION_IMAGE = "./data/image/questionIcon.png";
+    private static final String QUESTION_IMAGE = "./data/image/iconQuestion.png";
     private static final String[] HEADERS = {"Personal Health Number", "Patient's Name"};
     private static final int TABLE_WIDTH = 550;
     private static final int TABLE_HEIGHT = 100;
@@ -135,7 +135,7 @@ public class ViewPatientsPanel extends JPanel {
     // MODIFIES:
     // EFFECTS:
     // Reference: https://stackoverflow.com/a/15526480
-    public void playSound() {
+    private void playSound() {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(SOUND_FILE).getAbsoluteFile());
             Clip clip = AudioSystem.getClip();

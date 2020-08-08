@@ -16,7 +16,8 @@ import java.io.UnsupportedEncodingException;
 
 public class BiosyncGUI extends JFrame {
     private static final String PATIENTS_FILE = "./data/patients.txt";
-    private static final String FAVICON_IMAGE = "./data/image/favicon.png";
+    private static final String FAVICON = "./data/image/favicon.png";
+    private static final String SAVE_ICON = "./data/image/iconSave.png";
     private Patients patients;
 
     // Reference: https://examples.javacodegeeks.com/desktop-java/swing/java-swing-boxlayout-example/
@@ -43,11 +44,12 @@ public class BiosyncGUI extends JFrame {
 
     // MODIFIES:
     // EFFECTS:
-    public void frameSetUp() {
+    // Reference: https://stackoverflow.com/questions/1614772/how-to-change-jframe-icon
+    private void frameSetUp() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         setResizable(false);
-        ImageIcon favicon = new ImageIcon(FAVICON_IMAGE);
+        ImageIcon favicon = new ImageIcon(FAVICON);
         setIconImage(favicon.getImage());
     }
 
@@ -55,10 +57,12 @@ public class BiosyncGUI extends JFrame {
     // EFFECTS:
     // Reference: http://zetcode.com/javaswing/menusandtoolbars/
     private void menuBarSetUp() {
+        ImageIcon iconSave = new ImageIcon(SAVE_ICON);
+
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
 
-        JMenuItem saveMenuItem = new JMenuItem("Save");
+        JMenuItem saveMenuItem = new JMenuItem("Save", iconSave);
         saveMenuItem.addActionListener((event) -> savePatients());
 
         JMenuItem exitMenuItem = new JMenuItem("Exit");

@@ -17,7 +17,7 @@ import java.io.File;
 
 public class RegisterPatientPanel extends JPanel {
     private static final String SOUND_FILE = "./data/sound/popupSound.wav";
-    private static final String ERROR_IMAGE = "./data/image/errorIcon.png";
+    private static final String ERROR_IMAGE = "./data/image/iconError.png";
     private GridBagConstraints constraints;
     private JTextField phnTextField;
     private JTextField firstNameTextField;
@@ -143,7 +143,7 @@ public class RegisterPatientPanel extends JPanel {
     // MODIFIES:
     // EFFECTS:
     // Reference: https://stackoverflow.com/a/15526480
-    public void playSound() {
+    private void playSound() {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(SOUND_FILE).getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
