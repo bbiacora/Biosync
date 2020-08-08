@@ -30,7 +30,7 @@ public class AddPatientPanel extends JPanel {
         borderSetUp();
         labelSetUp();
         textFieldSetUp();
-        buttonSetUp();
+        addButtonSetUp();
     }
 
     // MODIFIES:
@@ -81,7 +81,8 @@ public class AddPatientPanel extends JPanel {
     // MODIFIES:
     // EFFECTS:
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
-    private void buttonSetUp() {
+    //            https://stackoverflow.com/a/15526361
+    private void addButtonSetUp() {
         JButton addButton = new JButton("Add");
         constraints.anchor = GridBagConstraints.LINE_END;
         constraints.gridy = 4;

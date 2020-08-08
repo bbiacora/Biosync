@@ -3,14 +3,19 @@ package ui.panels;
 import model.Patient;
 import model.Patients;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 public class ViewPatientsPanel extends JPanel {
+    private static final String SOUND_FILE = "./data/popupSound.wav";
     private static final String[] HEADERS = {"Personal Health Number", "Patient's Name"};
     private static final int TABLE_WIDTH = 550;
     private static final int TABLE_HEIGHT = 100;
@@ -29,7 +34,8 @@ public class ViewPatientsPanel extends JPanel {
         this.patients = patients;
 
         tableSetUp(patients);
-        buttonsSetUp();
+        removeButtonSetUp();
+        updateButtonSetUp();
     }
 
     // MODIFIES:
@@ -59,23 +65,31 @@ public class ViewPatientsPanel extends JPanel {
 
     // MODIFIES:
     // EFFECTS:
-    private void buttonsSetUp() {
+    private void removeButtonSetUp() {
         JButton removeButton = new JButton("Remove");
-        JButton updateButton = new JButton(" Update ");
         constraints.gridy = 1;
         constraints.anchor = GridBagConstraints.LINE_END;
         add(removeButton, constraints);
-        constraints.anchor = GridBagConstraints.LINE_START;
-        add(updateButton, constraints);
 
         removeButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                int row = table.getSelectedRow();
-                String personalHealthNumber = table.getModel().getValueAt(row, 0).toString();
-                confirmRemoval(personalHealthNumber);
+            public void actionPerformed(ActionEvent a) {
+                try {
+                    int row = table.getSelectedRow();
+                    String personalHealthNumber = table.getModel().getValueAt(row, 0).toString();
+                    playSound();
+                    confirmRemoval(personalHealthNumber);
+                } catch (Exception e) {
+                    System.out.println("Selection was not made.");
+                }
             }
         });
+    }
+
+    private void updateButtonSetUp() {
+        JButton updateButton = new JButton(" Update ");
+        constraints.anchor = GridBagConstraints.LINE_START;
+        add(updateButton, constraints);
 
         updateButton.addActionListener(new ActionListener() {
             @Override
@@ -85,11 +99,12 @@ public class ViewPatientsPanel extends JPanel {
         });
     }
 
+
     // MODIFIES: this
     // EFFECTS: populates table with patient information of patients in an ArrayList
     // Reference: https://stackoverflow.com/questions/20012772/how-to-populate-a-jtable-from-an-arraylist
     //            https://stackoverflow.com/questions/3879610/how-to-clear-contents-of-a-jtable
-    public void showPatientsInTable(JTable table, Patients patients) {
+    private void showPatientsInTable(JTable table, Patients patients) {
         patientsList = patients.getPatientsList();
         model.setRowCount(0);
         for (Patient p : patientsList) {
@@ -100,11 +115,24 @@ public class ViewPatientsPanel extends JPanel {
 
     // Reference: https://www.tutorialspoint.com/how-to-create-a-confirmation-dialog-box-in-java
     //            https://stackoverflow.com/a/38981623
-    public void confirmRemoval(String personalHealthNumber) {
+    private void confirmRemoval(String personalHealthNumber) {
         int response = JOptionPane.showConfirmDialog(null,
-                "Are you sure? This process cannot be undone.", " Confirm", JOptionPane.OK_CANCEL_OPTION);
+                "Are you sure? This process cannot be undone.",
+                " Confirm", JOptionPane.OK_CANCEL_OPTION);
+
         if (response == 0) {
             patients.removePatient(personalHealthNumber);
+        }
+    }
+
+    public void playSound() {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(SOUND_FILE).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            System.out.println("Sound file not found.");
         }
     }
 }
