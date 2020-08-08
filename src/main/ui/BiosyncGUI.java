@@ -3,6 +3,7 @@ package ui;
 import model.Patients;
 import persistence.Reader;
 import persistence.Writer;
+import ui.panels.HomePanel;
 import ui.panels.RegisterPatientPanel;
 import ui.panels.ViewPatientsPanel;
 
@@ -31,10 +32,12 @@ public class BiosyncGUI extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(new EmptyBorder(new Insets(20, 20, 20, 20)));
+        HomePanel homePanel = new HomePanel();
         ViewPatientsPanel viewPatientsPanel = new ViewPatientsPanel(patients);
         RegisterPatientPanel registerPatientPanel = new RegisterPatientPanel(patients);
-        panel.add(viewPatientsPanel);
-        panel.add(registerPatientPanel);
+        panel.add(homePanel);
+//        panel.add(viewPatientsPanel);
+//        panel.add(registerPatientPanel);
 
         add(panel);
         pack();
