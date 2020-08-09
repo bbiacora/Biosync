@@ -3,9 +3,9 @@ package ui;
 import model.Patients;
 import persistence.Reader;
 import persistence.Writer;
-import ui.panels.LoadingPanel;
-import ui.panels.RegisterPatientPanel;
-import ui.panels.ViewPatientsPanel;
+import ui.gui.components.LoadingPanel;
+import ui.gui.components.PatientRegistrationPanel;
+import ui.gui.components.ViewPatientsPanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public class BiosyncGUI extends JFrame {
-
     private static final String PATIENTS_FILE = "./data/patients.txt";
     private static final String FAVICON = "./data/image/favicon.png";
     private static final String SAVE_ICON = "./data/image/iconSave.png";
@@ -28,9 +27,16 @@ public class BiosyncGUI extends JFrame {
     // MODIFIES:
     // EFFECTS:
     // Reference: https://examples.javacodegeeks.com/desktop-java/swing/java-swing-boxlayout-example/
+    //            https://stackoverflow.com/questions/1614772/how-to-change-jframe-icon
     public BiosyncGUI() {
         super("BIOSYNC");
-        frameSetUp();
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout());
+        this.setResizable(false);
+
+        ImageIcon favicon = new ImageIcon(FAVICON);
+        this.setIconImage(favicon.getImage());
+
         menuBarSetUp();
 
         loadPatients();
@@ -39,31 +45,18 @@ public class BiosyncGUI extends JFrame {
         home.setLayout(new BoxLayout(home, BoxLayout.Y_AXIS));
         home.setBorder(new EmptyBorder(new Insets(20, 20, 20, 20)));
         LoadingPanel loadingPanel = new LoadingPanel();
-//        ViewPatientsPanel viewPatientsPanel = new ViewPatientsPanel(patients);
-//        RegisterPatientPanel registerPatientPanel = new RegisterPatientPanel(patients);
         home.add(loadingPanel);
-//        panel.add(viewPatientsPanel);
-//        panel.add(registerPatientPanel);
-        add(home);
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
-        timed(home, loadingPanel);
+
+        this.add(home);
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+
+        loadNextPanel(home, loadingPanel);
     }
 
     // MODIFIES:
-    // EFFECTS:
-    // Reference: https://stackoverflow.com/questions/1614772/how-to-change-jframe-icon
-    private void frameSetUp() {
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
-        setResizable(false);
-        ImageIcon favicon = new ImageIcon(FAVICON);
-        setIconImage(favicon.getImage());
-    }
-
-    // MODIFIES:
-    // EFFECTS:
+    // EFFECTS: creates a menu bar
     // Reference: http://zetcode.com/javaswing/menusandtoolbars/
     private void menuBarSetUp() {
         ImageIcon iconSave = new ImageIcon(SAVE_ICON);
@@ -87,20 +80,18 @@ public class BiosyncGUI extends JFrame {
     // MODIFIES:
     // EFFECTS:
     // Reference: https://stackoverflow.com/a/11613540
-    private void timed(JPanel panel, JPanel loadingPanel) {
+    private void loadNextPanel(JPanel panel, JPanel loadingPanel) {
         ViewPatientsPanel viewPatientsPanel = new ViewPatientsPanel(patients);
-        RegisterPatientPanel registerPatientPanel = new RegisterPatientPanel(patients);
-        Timer timer = new Timer(5000, new ActionListener() {
+        PatientRegistrationPanel patientRegistrationPanel = new PatientRegistrationPanel(patients);
+
+        Timer timer = new Timer(7500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 panel.remove(loadingPanel);
                 validate();
                 panel.add(viewPatientsPanel);
-                panel.add(registerPatientPanel);
-                add(panel);
+                panel.add(patientRegistrationPanel);
                 pack();
-                setLocationRelativeTo(null);
-                setVisible(true);
             }
         });
         timer.setRepeats(false);
@@ -108,14 +99,14 @@ public class BiosyncGUI extends JFrame {
     }
 
     // EFFECTS: saves all patient's information in patients to PATIENTS_FILE
-    // Refernce: https://github.students.cs.ubc.ca/CPSC210/TellerApp
+    // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     private void savePatients() {
         try {
             Writer writer = new Writer(new File(PATIENTS_FILE));
             writer.write(patients);
             writer.close();
         } catch (FileNotFoundException e) {
-            System.out.println(PATIENTS_FILE + " not found.");
+            System.err.println(PATIENTS_FILE + " not found.");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -124,7 +115,7 @@ public class BiosyncGUI extends JFrame {
     // MODIFIES: this
     // EFFECTS: loads patients from PATIENTS_FILE, if file exists;
     //          otherwise instantiates patients
-    // Refernce: https://github.students.cs.ubc.ca/CPSC210/TellerApp
+    // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     private void loadPatients() {
         try {
             patients = Reader.readPatients(new File(PATIENTS_FILE));

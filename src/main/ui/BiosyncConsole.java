@@ -14,6 +14,7 @@ import java.util.Scanner;
 // Patient management application
 public class BiosyncConsole {
     private static final String PATIENTS_FILE = "./data/patients.txt";
+
     private Scanner input;
     private Patients patients;
 
