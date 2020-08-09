@@ -16,8 +16,10 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 
 public class RegisterPatientPanel extends JPanel {
+
     private static final String SOUND_FILE = "./data/sound/popupSound.wav";
     private static final String ERROR_IMAGE = "./data/image/iconError.png";
+
     private GridBagConstraints constraints;
     private JTextField phnTextField;
     private JTextField firstNameTextField;

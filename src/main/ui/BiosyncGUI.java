@@ -3,24 +3,30 @@ package ui;
 import model.Patients;
 import persistence.Reader;
 import persistence.Writer;
-import ui.panels.HomePanel;
+import ui.panels.LoadingPanel;
 import ui.panels.RegisterPatientPanel;
 import ui.panels.ViewPatientsPanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public class BiosyncGUI extends JFrame {
+
     private static final String PATIENTS_FILE = "./data/patients.txt";
     private static final String FAVICON = "./data/image/favicon.png";
     private static final String SAVE_ICON = "./data/image/iconSave.png";
+
     private Patients patients;
 
+    // MODIFIES:
+    // EFFECTS:
     // Reference: https://examples.javacodegeeks.com/desktop-java/swing/java-swing-boxlayout-example/
     public BiosyncGUI() {
         super("BIOSYNC");
@@ -29,20 +35,20 @@ public class BiosyncGUI extends JFrame {
 
         loadPatients();
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(new EmptyBorder(new Insets(20, 20, 20, 20)));
-        HomePanel homePanel = new HomePanel();
-        ViewPatientsPanel viewPatientsPanel = new ViewPatientsPanel(patients);
-        RegisterPatientPanel registerPatientPanel = new RegisterPatientPanel(patients);
-        panel.add(homePanel);
+        JPanel home = new JPanel();
+        home.setLayout(new BoxLayout(home, BoxLayout.Y_AXIS));
+        home.setBorder(new EmptyBorder(new Insets(20, 20, 20, 20)));
+        LoadingPanel loadingPanel = new LoadingPanel();
+//        ViewPatientsPanel viewPatientsPanel = new ViewPatientsPanel(patients);
+//        RegisterPatientPanel registerPatientPanel = new RegisterPatientPanel(patients);
+        home.add(loadingPanel);
 //        panel.add(viewPatientsPanel);
 //        panel.add(registerPatientPanel);
-
-        add(panel);
+        add(home);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+        timed(home, loadingPanel);
     }
 
     // MODIFIES:
@@ -76,6 +82,29 @@ public class BiosyncGUI extends JFrame {
 
         menuBar.add(fileMenu);
         setJMenuBar(menuBar);
+    }
+
+    // MODIFIES:
+    // EFFECTS:
+    // Reference: https://stackoverflow.com/a/11613540
+    private void timed(JPanel panel, JPanel loadingPanel) {
+        ViewPatientsPanel viewPatientsPanel = new ViewPatientsPanel(patients);
+        RegisterPatientPanel registerPatientPanel = new RegisterPatientPanel(patients);
+        Timer timer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.remove(loadingPanel);
+                validate();
+                panel.add(viewPatientsPanel);
+                panel.add(registerPatientPanel);
+                add(panel);
+                pack();
+                setLocationRelativeTo(null);
+                setVisible(true);
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
     }
 
     // EFFECTS: saves all patient's information in patients to PATIENTS_FILE

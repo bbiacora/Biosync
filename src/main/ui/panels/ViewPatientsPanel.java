@@ -15,11 +15,13 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class ViewPatientsPanel extends JPanel {
+
     private static final String SOUND_FILE = "./data/sound/popupSound.wav";
     private static final String QUESTION_IMAGE = "./data/image/iconQuestion.png";
     private static final String[] HEADERS = {"Personal Health Number", "Patient's Name"};
     private static final int TABLE_WIDTH = 550;
     private static final int TABLE_HEIGHT = 100;
+
     private GridBagConstraints constraints;
     private JTable table;
     private DefaultTableModel model;
