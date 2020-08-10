@@ -45,8 +45,9 @@ developing, which aims to objectivize and expedite depression diagnosis and trea
   (*The application does not automatically save changes.*)
 - Data from file is automatically **loaded** to the application when Main is ran
 
-<br><br>
+##
+<br>
 
-\*Invalid 'Patient Registration' panel text field inputs:
+\* Invalid 'Patient Registration' panel text field inputs:
 - Personal health number input is non-numeric, its length is < 5, or it's already registered in the system
 - First or last name input is an empty string
