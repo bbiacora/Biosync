@@ -290,8 +290,8 @@ public class BiosyncConsole {
         if (list.size() == 0) {
             System.out.println(" - ");
         } else {
-            for (int i = 0; i < list.size(); i++) {
-                System.out.println(" - " + list.get(i));
+            for (String s : list) {
+                System.out.println(" - " + s);
             }
         }
     }
