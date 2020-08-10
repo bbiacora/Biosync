@@ -30,6 +30,7 @@ developing, which aims to objectivize and expedite depression diagnosis and trea
 - [x] As a user, I want to be able to **save the map of patients** to file
 - [x] As a user, I want to be able to **load the map of patients** from file when the program starts
 
+
 ##Instructions for Grader
 - You can **add** a patient by filling out the text fields in the 'Patient Registration' panel, 
   clicking the 'Register' button, and then clicking the 'Update' button
