@@ -57,42 +57,39 @@ public class SelectedPatientDialog extends JDialog {
     // EFFECTS: sets up text areas and their contents
     private void textAreaContentsSetUp() {
         JTextArea identification = textAreaSetUp();
-        formatHeading(identification, patient.getPersonalHealthNumber() + "   ", 0, 0);
+        formatHeading(identification, patient.getPersonalHealthNumber() + "   ");
         formatHeading(identification, patient.getFirstName().toUpperCase() + " " + patient
-                .getLastName().toUpperCase(), 0, 0);
+                .getLastName().toUpperCase());
 
         JTextArea diagnosesLabel = textAreaSetUp();
         JTextArea diagnoses = textAreaSetUp();
-        formatSubheading(diagnosesLabel, "DIAGNOSES", 0, 2);
-        formatList(diagnoses, patient.getDiagnoses(), 0, 3);
+        formatSubheading(diagnosesLabel, "DIAGNOSES", 2);
+        formatList(diagnoses, patient.getDiagnoses(), 3);
 
         JTextArea medicationsLabel = textAreaSetUp();
         JTextArea medications = textAreaSetUp();
-        formatSubheading(medicationsLabel, "MEDICATIONS", 0, 4);
-        formatList(medications, patient.getMedications(), 0, 5);
+        formatSubheading(medicationsLabel, "MEDICATIONS", 4);
+        formatList(medications, patient.getMedications(), 5);
     }
 
     // MODIFIES: this
     // EFFECTS: formats textArea as a heading and adds it to this
-    private void formatHeading(JTextArea textArea, String text, int x, int y) {
+    private void formatHeading(JTextArea textArea, String text) {
         Font headingFont = new Font("Dialog", Font.BOLD, 16);
         textArea.setFont(headingFont);
         textArea.append(text);
 
         constraints.insets = new Insets(20, 20, 0, 20);
-        constraints.gridx = x;
-        constraints.gridy = y;
         add(textArea, constraints);
     }
 
     // MODIFIES: this
     // EFFECTS: formats textArea as a subheading and adds it to this
-    private void formatSubheading(JTextArea textArea, String text, int x, int y) {
+    private void formatSubheading(JTextArea textArea, String text, int y) {
         Font headingFont = new Font("Dialog", Font.BOLD + Font.ITALIC, 14);
         textArea.setFont(headingFont);
         textArea.append(text);
 
-        constraints.gridx = x;
         constraints.gridy = y;
         add(textArea, constraints);
 
@@ -101,14 +98,13 @@ public class SelectedPatientDialog extends JDialog {
 
     // MODIFIES: this
     // EFFECTS: formats elements of an ArrayList into bullet points and adds it to this
-    private void formatList(JTextArea textArea, ArrayList<String> list, int x, int y) {
+    private void formatList(JTextArea textArea, ArrayList<String> list, int y) {
         Font body = new Font("Dialog", Font.PLAIN, 14);
         textArea.setFont(body);
         for (String s : list) {
-            textArea.append("  -   " + s.substring(0, 1) + s.substring(1).toLowerCase() + "\n");
+            textArea.append("  -   " + s.charAt(0) + s.substring(1).toLowerCase() + "\n");
         }
 
-        constraints.gridx = x;
         constraints.gridy = y;
         add(textArea, constraints);
     }
