@@ -5,17 +5,16 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 
-
 public class SoundPlayer {
-    private static final String SOUND_FILE = "./data/sound/popupSound.wav";
+    private static final String POPUP_SOUND = "./data/sound/popupSound.wav";
 
-    // EFFECTS: plays retrieved sound file
+    // EFFECTS: plays retrieved sound file from POPUP_SOUND
     // Reference: https://stackoverflow.com/a/15526480
     public void playPopUpSound() {
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(SOUND_FILE).getAbsoluteFile());
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(POPUP_SOUND).getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
+            clip.open(inputStream);
             clip.start();
         } catch (Exception e) {
             //keep going

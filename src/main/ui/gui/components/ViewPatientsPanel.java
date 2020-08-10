@@ -8,6 +8,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class ViewPatientsPanel extends JPanel {
@@ -31,14 +33,15 @@ public class ViewPatientsPanel extends JPanel {
         this.patients = patients;
 
         tableSetUp();
+        tableContentsSetUp();
         removeButtonSetUp();
         updateButtonSetUp();
     }
 
     // MODIFIES:
     // EFFECTS:
-    // Reference: https://stackoverflow.com/questions/20012772/how-to-populate-a-jtable-from-an-arraylist
-    //            https://stackoverflow.com/questions/1990817/how-to-make-a-jtable-non-editable
+    // Reference: https://stackoverflow.com/questions/1990817/how-to-make-a-jtable-non-editable
+    //            https://stackoverflow.com/questions/4051659/identifying-double-click-in-java
     private void tableSetUp() {
         table = new JTable();
         table.setPreferredScrollableViewportSize(new Dimension(TABLE_WIDTH, TABLE_HEIGHT));
@@ -49,6 +52,23 @@ public class ViewPatientsPanel extends JPanel {
         table.setIntercellSpacing(new Dimension(20, 0));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    String personalHealthNumber = getPersonalHealthNumberFromRow();
+                    Patient patient = patients.getPatient(personalHealthNumber);
+                    SelectedPatientDialog selectedPatient = new SelectedPatientDialog(patient);
+                    selectedPatient.setVisible(true);
+                }
+            }
+        });
+    }
+
+    // MODIFIES:
+    // EFFECTS:
+    // Reference: https://stackoverflow.com/questions/20012772/how-to-populate-a-jtable-from-an-arraylist
+    private void tableContentsSetUp() {
         model = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -79,8 +99,7 @@ public class ViewPatientsPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent a) {
                 try {
-                    int row = table.getSelectedRow();
-                    String personalHealthNumber = table.getModel().getValueAt(row, 0).toString();
+                    String personalHealthNumber = getPersonalHealthNumberFromRow();
                     confirmRemoval(personalHealthNumber);
                     showPatientsInTable();
                 } catch (Exception e) {
@@ -94,7 +113,6 @@ public class ViewPatientsPanel extends JPanel {
     // EFFECTS:
     private void updateButtonSetUp() {
         constraints.anchor = GridBagConstraints.LINE_START;
-
         JButton updateButton = new JButton(" Update ");
         this.add(updateButton, constraints);
 
@@ -111,13 +129,10 @@ public class ViewPatientsPanel extends JPanel {
     // Reference: https://stackoverflow.com/questions/20012772/how-to-populate-a-jtable-from-an-arraylist
     public void showPatientsInTable() {
         ArrayList<Patient> patientsList = patients.getPatientsList();
-
         model.setRowCount(0);
-
         for (Patient p : patientsList) {
             model.addRow(new Object[]{p.getPersonalHealthNumber(), p.getLastName() + ", " + p.getFirstName()});
         }
-
         table.setModel(model);
     }
 
@@ -136,4 +151,12 @@ public class ViewPatientsPanel extends JPanel {
             patients.removePatient(personalHealthNumber);
         }
     }
+
+    // MODIFIES:
+    // EFFECTS:
+    private String getPersonalHealthNumberFromRow() {
+        int row = table.getSelectedRow();
+        return table.getModel().getValueAt(row, 0).toString();
+    }
+
 }

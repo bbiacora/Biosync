@@ -20,12 +20,12 @@ public class PatientRegistrationPanel extends JPanel {
     private JTextField lastNameTextField;
     private Patients patients;
 
-    // MODIFIES:
+    // MODIFIES: this
     // EFFECTS:
     public PatientRegistrationPanel(Patients patients) {
-        Dimension size = this.getPreferredSize();
-        size.height = 150;
-        this.setPreferredSize(size);
+        Dimension panelDimension = this.getPreferredSize();
+        panelDimension.height = 150;
+        this.setPreferredSize(panelDimension);
 
         this.setLayout(new GridBagLayout());
         constraints = new GridBagConstraints();
@@ -39,16 +39,16 @@ public class PatientRegistrationPanel extends JPanel {
         registerButtonSetUp();
     }
 
-    // MODIFIES:
-    // EFFECTS:
+    // MODIFIES: this
+    // EFFECTS: adds a border around this panel
     private void borderSetUp() {
         Border border = BorderFactory.createEtchedBorder();
         border = BorderFactory.createTitledBorder(border, "  Patient Registration   ");
         this.setBorder(border);
     }
 
-    // MODIFIES: tihs
-    // EFFECTS:
+    // MODIFIES: this
+    // EFFECTS: adds labels for text fields in this panel
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
     private void labelSetUp() {
         constraints.anchor = GridBagConstraints.LINE_START;
@@ -67,7 +67,7 @@ public class PatientRegistrationPanel extends JPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS:
+    // EFFECTS: adds text fields to this panel
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
     //            https://stackoverflow.com/a/35393356
     private void textFieldSetUp() {
@@ -95,7 +95,7 @@ public class PatientRegistrationPanel extends JPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS:
+    // EFFECTS: adds a button to this panel
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
     //            https://stackoverflow.com/a/15526361
     private void registerButtonSetUp() {
@@ -111,10 +111,12 @@ public class PatientRegistrationPanel extends JPanel {
                 String personalHealthNumber = phnTextField.getText();
                 String firstName = firstNameTextField.getText();
                 String lastName = lastNameTextField.getText();
+
                 if (checkValidInput(personalHealthNumber, firstName, lastName)) {
                     Patient patient = new Patient(personalHealthNumber, firstName, lastName);
                     patients.addPatient(patient);
                 }
+
                 resetTextFields();
             }
         });

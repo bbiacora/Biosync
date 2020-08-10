@@ -7,11 +7,12 @@ public class LoadingPanel extends JPanel {
     private static final String LOGO = "./data/image/logo.png";
     private static final String BUFFER_IMAGE = "./data/image/buffer.gif";
 
-    private GridBagConstraints constraints;
-
+    // MODIFIES:
+    // EFFECTS:
     public LoadingPanel() {
         this.setLayout(new GridBagLayout());
-        constraints = new GridBagConstraints();
+
+        GridBagConstraints constraints = new GridBagConstraints();
         constraints.insets = new Insets(77, 77, 40, 77);
 
         constraints.gridy = 0;
@@ -25,3 +26,5 @@ public class LoadingPanel extends JPanel {
         this.add(buffer, constraints);
     }
 }
+
+
