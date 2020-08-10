@@ -69,7 +69,7 @@ public class PatientRegistrationPanel extends JPanel {
     // MODIFIES: this
     // EFFECTS: adds text fields to this panel
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
-    //            https://stackoverflow.com/a/35393356
+    //            https://stackoverflow.com/a/35393356 (limit number of characters inputted in JTextField)
     private void textFieldSetUp() {
         constraints.gridx = 1;
         constraints.gridy = 1;
@@ -97,7 +97,6 @@ public class PatientRegistrationPanel extends JPanel {
     // MODIFIES: this
     // EFFECTS: adds a button to this panel
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
-    //            https://stackoverflow.com/a/15526361
     private void registerButtonSetUp() {
         JButton registerButton = new JButton("Register");
         constraints.gridy = 4;

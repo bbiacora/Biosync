@@ -9,7 +9,7 @@ public class SoundPlayer {
     private static final String POPUP_SOUND = "./data/sound/popupSound.wav";
 
     // EFFECTS: plays retrieved sound file from POPUP_SOUND
-    // Reference: https://stackoverflow.com/a/15526480
+    // Reference: https://stackoverflow.com/a/15526480 (retrieve and play sound file)
     public void playPopUpSound() {
         try {
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(POPUP_SOUND).getAbsoluteFile());

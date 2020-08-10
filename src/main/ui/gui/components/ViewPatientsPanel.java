@@ -40,8 +40,8 @@ public class ViewPatientsPanel extends JPanel {
 
     // MODIFIES:
     // EFFECTS:
-    // Reference: https://stackoverflow.com/questions/1990817/how-to-make-a-jtable-non-editable
-    //            https://stackoverflow.com/questions/4051659/identifying-double-click-in-java
+    // Reference: https://stackoverflow.com/a/4051681 (mouse event: double left click)
+    //            https://stackoverflow.com/a/6750561 (modal dialog pane)
     private void tableSetUp() {
         table = new JTable();
         table.setPreferredScrollableViewportSize(new Dimension(TABLE_WIDTH, TABLE_HEIGHT));
@@ -55,10 +55,11 @@ public class ViewPatientsPanel extends JPanel {
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
+                if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2) {
                     String personalHealthNumber = getPersonalHealthNumberFromRow();
                     Patient patient = patients.getPatient(personalHealthNumber);
                     SelectedPatientDialog selectedPatient = new SelectedPatientDialog(patient);
+
                     selectedPatient.setVisible(true);
                 }
             }
@@ -67,7 +68,7 @@ public class ViewPatientsPanel extends JPanel {
 
     // MODIFIES:
     // EFFECTS:
-    // Reference: https://stackoverflow.com/questions/20012772/how-to-populate-a-jtable-from-an-arraylist
+    // Reference: https://stackoverflow.com/a/3134006 (non-editable cells)
     private void tableContentsSetUp() {
         model = new DefaultTableModel() {
             @Override
@@ -126,18 +127,19 @@ public class ViewPatientsPanel extends JPanel {
 
     // MODIFIES: this
     // EFFECTS: populates table with patient information of patients in an ArrayList
-    // Reference: https://stackoverflow.com/questions/20012772/how-to-populate-a-jtable-from-an-arraylist
+    // Reference: https://stackoverflow.com/a/35691199 (populate JTable with data from elements in ArrayList)
     public void showPatientsInTable() {
         ArrayList<Patient> patientsList = patients.getPatientsList();
         model.setRowCount(0);
         for (Patient p : patientsList) {
-            model.addRow(new Object[]{p.getPersonalHealthNumber(), p.getLastName() + ", " + p.getFirstName()});
+            model.addRow(new Object[]{p.getPersonalHealthNumber(), p.getFirstName() + " " + p.getLastName()});
         }
         table.setModel(model);
     }
 
+    // MODIFIES:
+    // EFFECTS:
     // Reference: https://www.tutorialspoint.com/how-to-create-a-confirmation-dialog-box-in-java
-    //            https://stackoverflow.com/a/38981623
     private void confirmRemoval(String personalHealthNumber) {
         ImageIcon iconQuestion = new ImageIcon(QUESTION_IMAGE);
         SoundPlayer soundPlayer = new SoundPlayer();
@@ -154,6 +156,7 @@ public class ViewPatientsPanel extends JPanel {
 
     // MODIFIES:
     // EFFECTS:
+    // Reference: https://stackoverflow.com/a/38981623 (retrieve value from selected row)
     private String getPersonalHealthNumberFromRow() {
         int row = table.getSelectedRow();
         return table.getModel().getValueAt(row, 0).toString();

@@ -27,7 +27,7 @@ public class BiosyncGUI extends JFrame {
     // MODIFIES:
     // EFFECTS:
     // Reference: https://examples.javacodegeeks.com/desktop-java/swing/java-swing-boxlayout-example/
-    //            https://stackoverflow.com/questions/1614772/how-to-change-jframe-icon
+    //            https://stackoverflow.com/a/1614803 (change favicon)
     public BiosyncGUI() {
         super("BIOSYNC");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -79,7 +79,7 @@ public class BiosyncGUI extends JFrame {
 
     // MODIFIES:
     // EFFECTS:
-    // Reference: https://stackoverflow.com/a/11613540
+    // Reference: https://stackoverflow.com/a/11613540 (execute a timed event)
     private void loadNextPanel(JPanel panel, JPanel loadingPanel) {
         ViewPatientsPanel viewPatientsPanel = new ViewPatientsPanel(patients);
         PatientRegistrationPanel patientRegistrationPanel = new PatientRegistrationPanel(patients);
