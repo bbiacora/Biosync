@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+// Represents a patient management application
 public class BiosyncGUI extends JFrame {
     private static final String PATIENTS_FILE = "./data/patients.txt";
     private static final String FAVICON = "./data/image/favicon.png";
@@ -24,8 +25,8 @@ public class BiosyncGUI extends JFrame {
 
     private Patients patients;
 
-    // MODIFIES:
-    // EFFECTS:
+    // MODIFIES: this
+    // EFFECTS: constructs BiosyncGUI, loads patients, displays LoadingPanel
     // Reference: https://examples.javacodegeeks.com/desktop-java/swing/java-swing-boxlayout-example/
     //            https://stackoverflow.com/a/1614803 (change favicon)
     public BiosyncGUI() {
@@ -55,8 +56,10 @@ public class BiosyncGUI extends JFrame {
         loadNextPanel(home, loadingPanel);
     }
 
-    // MODIFIES:
-    // EFFECTS: creates a menu bar
+    // MODIFIES: this
+    // EFFECTS: constructs a menu bar with 2 menu items (save and exit);
+    //          saves the state of BiosyncGUI when save menu item is clicked,
+    //          stops and close BiosyncGUI window when exit menu item is clicked
     // Reference: http://zetcode.com/javaswing/menusandtoolbars/
     private void menuBarSetUp() {
         ImageIcon iconSave = new ImageIcon(SAVE_ICON);
@@ -74,17 +77,17 @@ public class BiosyncGUI extends JFrame {
         fileMenu.add(exitMenuItem);
 
         menuBar.add(fileMenu);
-        setJMenuBar(menuBar);
+        this.setJMenuBar(menuBar);
     }
 
-    // MODIFIES:
-    // EFFECTS:
+    // MODIFIES: this
+    // EFFECTS: replaces loadingPanel with viewPatientsPanel and patientRegistrationPanel after 7000ms
     // Reference: https://stackoverflow.com/a/11613540 (execute a timed event)
     private void loadNextPanel(JPanel panel, JPanel loadingPanel) {
         ViewPatientsPanel viewPatientsPanel = new ViewPatientsPanel(patients);
         PatientRegistrationPanel patientRegistrationPanel = new PatientRegistrationPanel(patients);
 
-        Timer timer = new Timer(7500, new ActionListener() {
+        Timer timer = new Timer(7000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 panel.remove(loadingPanel);
@@ -98,6 +101,7 @@ public class BiosyncGUI extends JFrame {
         timer.start();
     }
 
+    // MODIFIES: this
     // EFFECTS: saves all patient's information in patients to PATIENTS_FILE
     // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     private void savePatients() {
@@ -113,8 +117,7 @@ public class BiosyncGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads patients from PATIENTS_FILE, if file exists;
-    //          otherwise instantiates patients
+    // EFFECTS: loads patients from PATIENTS_FILE if the files exists, otherwise instantiates patients
     // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     private void loadPatients() {
         try {

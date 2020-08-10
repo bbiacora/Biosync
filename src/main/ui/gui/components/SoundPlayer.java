@@ -5,6 +5,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 
+// Represents a sound player
 public class SoundPlayer {
     private static final String POPUP_SOUND = "./data/sound/popupSound.wav";
 

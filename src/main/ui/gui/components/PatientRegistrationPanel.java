@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+// Represents a patient registration panel for BiosyncGUI
 public class PatientRegistrationPanel extends JPanel {
     private static final String ERROR_IMAGE = "./data/image/iconError.png";
 
@@ -21,34 +22,27 @@ public class PatientRegistrationPanel extends JPanel {
     private Patients patients;
 
     // MODIFIES: this
-    // EFFECTS:
+    // EFFECTS: constructs a patient registration panel with text fields and a button
     public PatientRegistrationPanel(Patients patients) {
+        this.patients = patients;
+
         Dimension panelDimension = this.getPreferredSize();
         panelDimension.height = 150;
         this.setPreferredSize(panelDimension);
-
         this.setLayout(new GridBagLayout());
         constraints = new GridBagConstraints();
         constraints.insets = new Insets(10, 0, 0, 0);
+        Border border = BorderFactory.createEtchedBorder();
+        border = BorderFactory.createTitledBorder(border, "  Patient Registration   ");
+        this.setBorder(border);
 
-        this.patients = patients;
-
-        borderSetUp();
         labelSetUp();
         textFieldSetUp();
         registerButtonSetUp();
     }
 
     // MODIFIES: this
-    // EFFECTS: adds a border around this panel
-    private void borderSetUp() {
-        Border border = BorderFactory.createEtchedBorder();
-        border = BorderFactory.createTitledBorder(border, "  Patient Registration   ");
-        this.setBorder(border);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds labels for text fields in this panel
+    // EFFECTS: adds labels for text fields in this
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
     private void labelSetUp() {
         constraints.anchor = GridBagConstraints.LINE_START;
@@ -67,7 +61,8 @@ public class PatientRegistrationPanel extends JPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds text fields to this panel
+    // EFFECTS: adds personal health number, first name, and last name text fields to this;
+    //          personalHealthNumberTextField consumes characters that exceed the limit (5 characters)
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
     //            https://stackoverflow.com/a/35393356 (limit number of characters inputted in JTextField)
     private void textFieldSetUp() {
@@ -95,7 +90,8 @@ public class PatientRegistrationPanel extends JPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds a button to this panel
+    // EFFECTS: constructs a register button;
+    //          when clicked, validates inputs and resets text fields
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
     private void registerButtonSetUp() {
         JButton registerButton = new JButton("Register");
@@ -121,8 +117,10 @@ public class PatientRegistrationPanel extends JPanel {
         });
     }
 
-
     // EFFECTS: returns true if given inputs are valid, otherwise returns false
+    // Note: Valid inputs are
+    //   - phnTextField : numeric, has length of 5 characters, and has not yet been registered
+    //   - first and lastNameTextField: non-empty string
     private boolean checkValidInput(String personalHealthNumber, String firstName, String lastName) {
         SoundPlayer soundPlayer = new SoundPlayer();
         ImageIcon iconError = new ImageIcon(ERROR_IMAGE);

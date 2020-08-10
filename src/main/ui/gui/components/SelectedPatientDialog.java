@@ -6,84 +6,110 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+// Represents panel that displays a selected patient's medical information
 public class SelectedPatientDialog extends JDialog {
     private static final String FAVICON = "./data/image/favicon.png";
-    private static final int WIDTH = 600;
-    private static final int HEIGHT = 443;
-    private JPanel panel;
-    //    private JTextArea textArea;
-    private Patient patient;
-    private GridBagConstraints constraints;
+    private static final String ROBOT_IMAGE = "./data/image/baymax.gif";
+    private static final Color BACKGROUND_COLOUR = new Color(186, 221, 255);
 
-    // MODIFIES:
-    // EFFECTS:
+    private GridBagConstraints constraints;
+    private Patient patient;
+
+    // MODIFIES: this
+    // EFFECTS: constructs a selected patient dialog window
     public SelectedPatientDialog(Patient patient) {
         this.patient = patient;
 
         this.setTitle("BIOSYNC - " + patient.getFirstName().toUpperCase() + " " + patient.getLastName().toUpperCase());
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        this.getContentPane().setBackground(BACKGROUND_COLOUR);
         this.setLayout(new GridBagLayout());
-        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.setResizable(false);
         this.setModal(true);
+        ImageIcon favicon = new ImageIcon(FAVICON);
+        this.setIconImage(favicon.getImage());
 
         constraints = new GridBagConstraints();
         constraints.anchor = GridBagConstraints.LINE_START;
-
-        ImageIcon favicon = new ImageIcon(FAVICON);
-        this.setIconImage(favicon.getImage());
         textAreaContentsSetUp();
+
+        constraints.insets = new Insets(0, 0, 0, 20);
+        constraints.anchor = GridBagConstraints.LINE_END;
+        constraints.gridx = 1;
+        constraints.gridy = 6;
+        JLabel robot = new JLabel(new ImageIcon(ROBOT_IMAGE));
+        this.add(robot, constraints);
+
         pack();
         this.setLocationRelativeTo(null);
     }
 
-    private void textAreaSetUp(JTextArea textArea) {
-        textArea.setBackground(new Color(238, 238, 238));
+    // EFFECTS: constructs a new textArea and returns it
+    private JTextArea textAreaSetUp() {
+        JTextArea textArea = new JTextArea();
+        textArea.setBackground(BACKGROUND_COLOUR);
         textArea.setWrapStyleWord(true);
         textArea.setEditable(false);
+        return textArea;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up text areas and their contents
     private void textAreaContentsSetUp() {
-        JTextArea general = new JTextArea();
-        JTextArea diagnosesLabel = new JTextArea();
-        JTextArea medicationsLabel = new JTextArea();
-        JTextArea diagnoses = new JTextArea();
-        JTextArea medications = new JTextArea();
-        textAreaSetUp(general);
-        textAreaSetUp(diagnosesLabel);
-        textAreaSetUp(medicationsLabel);
-        textAreaSetUp(diagnoses);
-        textAreaSetUp(medications);
+        JTextArea identification = textAreaSetUp();
+        formatHeading(identification, patient.getPersonalHealthNumber() + "   ", 0, 0);
+        formatHeading(identification, patient.getFirstName().toUpperCase() + " " + patient
+                .getLastName().toUpperCase(), 0, 0);
 
-
-        formatHeading(general, patient.getPersonalHealthNumber() + "   ", 0, 0);
-        formatHeading(general, patient.getFirstName().toUpperCase() + " " + patient.getLastName().toUpperCase() + "\n", 0, 0);
-        formatHeading(diagnosesLabel, "DIAGNOSES", 0, 2);
+        JTextArea diagnosesLabel = textAreaSetUp();
+        JTextArea diagnoses = textAreaSetUp();
+        formatSubheading(diagnosesLabel, "DIAGNOSES", 0, 2);
         formatList(diagnoses, patient.getDiagnoses(), 0, 3);
-        formatHeading(medicationsLabel, "MEDICATIONS", 0, 4);
+
+        JTextArea medicationsLabel = textAreaSetUp();
+        JTextArea medications = textAreaSetUp();
+        formatSubheading(medicationsLabel, "MEDICATIONS", 0, 4);
         formatList(medications, patient.getMedications(), 0, 5);
     }
 
+    // MODIFIES: this
+    // EFFECTS: formats textArea as a heading and adds it to this
     private void formatHeading(JTextArea textArea, String text, int x, int y) {
-        constraints.gridx = x;
-        constraints.gridy = y;
-        textAreaSetUp(textArea);
-        Font headingFont = new Font("Dialog", Font.BOLD, 14);
+        Font headingFont = new Font("Dialog", Font.BOLD, 16);
         textArea.setFont(headingFont);
         textArea.append(text);
+
+        constraints.insets = new Insets(20, 20, 0, 20);
+        constraints.gridx = x;
+        constraints.gridy = y;
         add(textArea, constraints);
     }
 
-    // EFFECTS: formats elements of an ArrayList into bullet points and adds it to textArea
-    private void formatList(JTextArea textArea, ArrayList<String> list, int x, int y) {
+    // MODIFIES: this
+    // EFFECTS: formats textArea as a subheading and adds it to this
+    private void formatSubheading(JTextArea textArea, String text, int x, int y) {
+        Font headingFont = new Font("Dialog", Font.BOLD + Font.ITALIC, 14);
+        textArea.setFont(headingFont);
+        textArea.append(text);
+
         constraints.gridx = x;
         constraints.gridy = y;
+        add(textArea, constraints);
+
+        constraints.insets = new Insets(0, 20, 0, 20);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: formats elements of an ArrayList into bullet points and adds it to this
+    private void formatList(JTextArea textArea, ArrayList<String> list, int x, int y) {
         Font body = new Font("Dialog", Font.PLAIN, 14);
         textArea.setFont(body);
         for (String s : list) {
             textArea.append("  -   " + s.substring(0, 1) + s.substring(1).toLowerCase() + "\n");
         }
-        textArea.append("\n");
+
+        constraints.gridx = x;
+        constraints.gridy = y;
         add(textArea, constraints);
     }
 

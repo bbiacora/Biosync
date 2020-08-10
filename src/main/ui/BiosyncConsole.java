@@ -11,7 +11,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// Patient management application
+// Represents a console-based patient management application
 public class BiosyncConsole {
     private static final String PATIENTS_FILE = "./data/patients.txt";
 
@@ -88,6 +88,7 @@ public class BiosyncConsole {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: saves all patient's information in patients to PATIENTS_FILE
     // Refernce: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     private void savePatients() {

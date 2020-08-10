@@ -3,12 +3,13 @@ package ui.gui.components;
 import javax.swing.*;
 import java.awt.*;
 
+// Represents a loading panel for BiosyncGUI
 public class LoadingPanel extends JPanel {
     private static final String LOGO = "./data/image/logo.png";
     private static final String BUFFER_IMAGE = "./data/image/buffer.gif";
 
-    // MODIFIES:
-    // EFFECTS:
+    // MODIFIES: this
+    // EFFECTS: constructs a loading panel
     public LoadingPanel() {
         this.setLayout(new GridBagLayout());
 
@@ -16,9 +17,8 @@ public class LoadingPanel extends JPanel {
         constraints.insets = new Insets(77, 77, 40, 77);
 
         constraints.gridy = 0;
-        JLabel bufferImage = new JLabel(new ImageIcon(LOGO));
-        bufferImage.setForeground(new Color(238, 238, 238));
-        this.add(bufferImage, constraints);
+        JLabel logo = new JLabel(new ImageIcon(LOGO));
+        this.add(logo, constraints);
 
         constraints.gridy = 1;
         constraints.insets = new Insets(0, 77, 63, 77);
