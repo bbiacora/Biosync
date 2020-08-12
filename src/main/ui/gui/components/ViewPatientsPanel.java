@@ -44,7 +44,6 @@ public class ViewPatientsPanel extends JPanel {
     // EFFECTS: constructs a table; when a table row is double clicked,
     //          displays selectedPatientPanel for the patient in the selected row
     // Reference: https://stackoverflow.com/a/4051681 (mouse event: double left click)
-    //            https://stackoverflow.com/a/6750561 (modal dialog pane)
     private void tableSetUp() {
         table = new JTable();
         table.setPreferredScrollableViewportSize(new Dimension(TABLE_WIDTH, TABLE_HEIGHT));

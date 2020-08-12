@@ -20,12 +20,14 @@ public class SelectedPatientDialog extends JDialog {
     public SelectedPatientDialog(Patient patient) {
         this.patient = patient;
 
-        this.setTitle("BIOSYNC - " + patient.getFirstName().toUpperCase() + " " + patient.getLastName().toUpperCase());
+        this.setTitle("BIOSYNC - " + patient.getFirstName().toUpperCase()
+                + " " + patient.getLastName().toUpperCase());
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.getContentPane().setBackground(BACKGROUND_COLOUR);
         this.setLayout(new GridBagLayout());
         this.setResizable(false);
         this.setModal(true);
+
         ImageIcon favicon = new ImageIcon(FAVICON);
         this.setIconImage(favicon.getImage());
 

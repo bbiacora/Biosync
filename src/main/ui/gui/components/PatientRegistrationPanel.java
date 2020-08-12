@@ -124,19 +124,17 @@ public class PatientRegistrationPanel extends JPanel {
     private boolean checkValidInput(String personalHealthNumber, String firstName, String lastName) {
         SoundPlayer soundPlayer = new SoundPlayer();
         ImageIcon iconError = new ImageIcon(ERROR_IMAGE);
+        soundPlayer.playPopUpSound();
 
         if (phnTextField.getText().length() < 5 || !(personalHealthNumber.matches("^[0-9]*$"))) {
-            soundPlayer.playPopUpSound();
             JOptionPane.showConfirmDialog(null, "Please enter a valid personal health number.",
                     "", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, iconError);
             return false;
         } else if (patients.containsPatient(personalHealthNumber)) {
-            soundPlayer.playPopUpSound();
             JOptionPane.showConfirmDialog(null, "Patient is already registered in the system.",
                     "", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, iconError);
             return false;
         } else if (firstName.equals("") || lastName.equals("")) {
-            soundPlayer.playPopUpSound();
             JOptionPane.showConfirmDialog(null, "Please fill out the required fields.",
                     "", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, iconError);
             return false;
