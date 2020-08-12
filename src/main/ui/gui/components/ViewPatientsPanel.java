@@ -91,8 +91,7 @@ public class ViewPatientsPanel extends JPanel {
     // EFFECTS: constructs a remove button;
     //          when clicked and a row is selected, retrieves personal health number from row,
     //          displays a dialog box that asks user for patient removal confirmation
-    //          - OR -
-    //          when clicked and a row is NOT selected, does nothing
+    //          - OR - when clicked and a row is NOT selected, does nothing
     private void removeButtonSetUp() {
         constraints.insets.bottom = 20;
         constraints.gridy = 1;
@@ -116,8 +115,7 @@ public class ViewPatientsPanel extends JPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS: constructs an update button;
-    //          when clicked, reloads table
+    // EFFECTS: constructs an update button; when clicked, reloads table
     private void updateButtonSetUp() {
         constraints.anchor = GridBagConstraints.LINE_START;
         JButton updateButton = new JButton(" Update ");

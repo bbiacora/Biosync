@@ -32,6 +32,7 @@ public class PatientRegistrationPanel extends JPanel {
         this.setLayout(new GridBagLayout());
         constraints = new GridBagConstraints();
         constraints.insets = new Insets(10, 0, 0, 0);
+
         Border border = BorderFactory.createEtchedBorder();
         border = BorderFactory.createTitledBorder(border, "  Patient Registration   ");
         this.setBorder(border);
@@ -90,8 +91,7 @@ public class PatientRegistrationPanel extends JPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS: constructs a register button;
-    //          when clicked, validates inputs and resets text fields
+    // EFFECTS: constructs a register button; when clicked, validates inputs and resets text fields
     // Reference: https://caveofprogramming.com/java-swing-gui/java-swing-gridbaglayou-video-tutorial-part-4.html
     private void registerButtonSetUp() {
         JButton registerButton = new JButton("Register");
@@ -118,9 +118,9 @@ public class PatientRegistrationPanel extends JPanel {
     }
 
     // EFFECTS: returns true if given inputs are valid, otherwise returns false
-    // Note: Valid inputs are
-    //   - phnTextField : numeric, has length of 5 characters, and has not yet been registered
-    //   - first and lastNameTextField: non-empty string
+    // NOTE: Valid inputs are
+    //         - phnTextField : numeric, has length of 5 characters, and has not yet been registered
+    //         - first and lastNameTextField: non-empty string
     private boolean checkValidInput(String personalHealthNumber, String firstName, String lastName) {
         SoundPlayer soundPlayer = new SoundPlayer();
         ImageIcon iconError = new ImageIcon(ERROR_IMAGE);

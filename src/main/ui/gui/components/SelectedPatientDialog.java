@@ -46,7 +46,7 @@ public class SelectedPatientDialog extends JDialog {
         this.setLocationRelativeTo(null);
     }
 
-    // EFFECTS: constructs a new textArea and returns it
+    // EFFECTS: constructs a textArea and returns it
     private JTextArea textAreaSetUp() {
         JTextArea textArea = new JTextArea();
         textArea.setBackground(BACKGROUND_COLOUR);
@@ -60,8 +60,8 @@ public class SelectedPatientDialog extends JDialog {
     private void textAreaContentsSetUp() {
         JTextArea identification = textAreaSetUp();
         formatHeading(identification, patient.getPersonalHealthNumber() + "   ");
-        formatHeading(identification, patient.getFirstName().toUpperCase() + " " + patient
-                .getLastName().toUpperCase());
+        formatHeading(identification, patient.getFirstName().toUpperCase() + " "
+                + patient.getLastName().toUpperCase());
 
         JTextArea diagnosesLabel = textAreaSetUp();
         JTextArea diagnoses = textAreaSetUp();

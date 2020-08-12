@@ -25,7 +25,7 @@ public class Patients implements Savable {
 
     // MODIFIES: this
     // EFFECT: adds an existing patient to patients
-    // NOTE: this method is to be used only when adding a patient to patients from data stored in file
+    // NOTE: this method is to be used only when adding a patient from data stored in file
     public void addPatient(Patient patient) {
         patients.put(patient.getPersonalHealthNumber(), patient);
     }
@@ -67,7 +67,7 @@ public class Patients implements Savable {
     }
 
     // MODIFIES: printWriter
-    // EFFECTS: writes the savable to printWriter, , returns true at the end of the execution
+    // EFFECTS: writes the savable to printWriter, returns true at the end of the execution
     // Reference: https://github.students.cs.ubc.ca/CPSC210/TellerApp
     @Override
     public boolean save(PrintWriter printWriter) {

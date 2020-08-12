@@ -117,12 +117,12 @@ public class Patient implements Savable {
         return lastName;
     }
 
-    // EFFECTS: returns patient's a list of diagnoses
+    // EFFECTS: returns patient's list of diagnoses
     public ArrayList<String> getDiagnoses() {
         return diagnoses;
     }
 
-    // EFFECTS: returns patient's a list of medications
+    // EFFECTS: returns patient's list of medications
     public ArrayList<String> getMedications() {
         return medications;
     }

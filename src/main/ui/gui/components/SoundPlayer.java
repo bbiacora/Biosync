@@ -13,7 +13,8 @@ public class SoundPlayer {
     // Reference: https://stackoverflow.com/a/15526480 (retrieve and play sound file)
     public void playPopUpSound() {
         try {
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(POPUP_SOUND).getAbsoluteFile());
+            File popupSound = new File(POPUP_SOUND).getAbsoluteFile();
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(popupSound);
             Clip clip = AudioSystem.getClip();
             clip.open(inputStream);
             clip.start();

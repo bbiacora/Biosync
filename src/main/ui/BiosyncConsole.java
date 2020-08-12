@@ -18,9 +18,8 @@ public class BiosyncConsole {
     private Scanner input;
     private Patients patients;
 
-    // EFFECTS: prints welcome message;
-    //          loads patients from PATIENTS_FILE;
-    //          runs application;
+    // EFFECTS: prints welcome message, loads patients from PATIENTS_FILE,
+    //          runs application
     public BiosyncConsole() {
         System.out.println("WELCOME TO BIOSYNC!");
         loadPatients();
@@ -109,28 +108,26 @@ public class BiosyncConsole {
 
     // EFFECTS: prints name of all patient in patients along with their corresponding personal health number;
     //          prompts user to select and modify the records of a patient displayed
-    // Reference: https://stackoverflow.com/questions/46041997/print-list-of-values-from-hashmap
+    // Reference: https://stackoverflow.com/a/46042050 (print list of values from a HashMap)
     private void viewPatients() {
         if (patients.getPatientKeySet().size() == 0) {
             System.err.println("There are no patients registered in the system.\n");
         } else {
             System.out.println("PERSONAL HEALTH NUMBER\t" + " | " + "   \tNAME   ");
             for (String key : patients.getPatientKeySet()) {
-                String personalHealthNumber = patients.getPatient(key).getPersonalHealthNumber();
                 String firstName = patients.getPatient(key).getFirstName();
                 String lastName = patients.getPatient(key).getLastName();
-                System.out.println("\t\t" + personalHealthNumber + "\t\t\t" + " | \t " + firstName + " " + lastName);
+                System.out.println("\t\t" + key + "\t\t\t" + " | \t " + firstName + " " + lastName);
             }
             selectPatient();
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: prompts user to enter a valid patient's personal health number and first and last name;
-    //          adds patient to patients if personal health number is not yet mapped to an existing patient;
-    //          prints a confirmation that the patient has been added;
-    // Reference:
-    // https://stackoverflow.com/questions/4244109/regular-expression-to-accept-only-characters-a-z-in-a-textbox
+    // EFFECTS: prompts user to enter a patient's personal health number and first and last name;
+    //          if inputs are valid, adds patient to patients and
+    //          prints a confirmation that the patient has been added
+    // Reference: https://stackoverflow.com/a/4244127 (regex: alphabetical characters)
     private void addPatient() {
         System.out.println("Patient's 5-digit Personal Health Number:");
         String personalHealthNumber = input.nextLine();
@@ -138,7 +135,7 @@ public class BiosyncConsole {
         if (patients.containsPatient(personalHealthNumber)) {
             System.err.println("Patient already registered in the system.\n");
         } else {
-            System.out.println("Patient's first name: ");
+            System.out.println("Patient's First name: ");
             String firstName = input.nextLine();
             System.out.println("Patient's Last name: ");
             String lastName = input.nextLine();
@@ -166,8 +163,9 @@ public class BiosyncConsole {
                 System.err.println("Patient not found.\n");
             } else {
                 if (confirmRemoval(personalHealthNumber)) {
-                    System.out.println("\n" + patients.getPatient(personalHealthNumber).getFirstName() + " " + patients
-                            .getPatient(personalHealthNumber).getLastName() + " has been removed from the system.\n");
+                    System.out.println("\n" + patients.getPatient(personalHealthNumber).getFirstName() + " "
+                            + patients.getPatient(personalHealthNumber).getLastName()
+                            + " has been removed from the system.\n");
                     patients.removePatient(personalHealthNumber);
                 }
             }
@@ -211,11 +209,11 @@ public class BiosyncConsole {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds/removes a diagnosis or a medication to patient's records
+    // EFFECTS: prompts user to modify patient's records
     private void modifyPatientRecord(String personalHealthNumber) {
         String command = "";
-        while (!(command.equals("d") || command.equals("v") || command.equals("m") || command.equals("x") || command
-                .equals("b"))) {
+        while (!(command.equals("d") || command.equals("v")
+                || command.equals("m") || command.equals("x") || command.equals("b"))) {
             displayPatientMenu();
             command = input.nextLine();
         }
@@ -277,17 +275,17 @@ public class BiosyncConsole {
     // EFFECTS: prints patient records
     private void printPatientRecord(String personalHealthNumber) {
         System.out.println("\nPersonal Health Number: " + personalHealthNumber);
-        System.out.println("Name: " + patients.getPatient(personalHealthNumber)
-                .getFirstName() + patients.getPatient(personalHealthNumber).getLastName());
+        System.out.println("Name: " + patients.getPatient(personalHealthNumber).getFirstName()
+                + patients.getPatient(personalHealthNumber).getLastName());
         System.out.println("Diagnoses: ");
-        formatRecords(patients.getPatient(personalHealthNumber).getDiagnoses());
+        printList(patients.getPatient(personalHealthNumber).getDiagnoses());
         System.out.println("Medications: ");
-        formatRecords(patients.getPatient(personalHealthNumber).getMedications());
+        printList(patients.getPatient(personalHealthNumber).getMedications());
         System.out.println();
     }
 
     // EFFECTS: prints a bulleted list
-    private void formatRecords(ArrayList<String> list) {
+    private void printList(ArrayList<String> list) {
         if (list.size() == 0) {
             System.out.println(" - ");
         } else {
