@@ -60,7 +60,7 @@ public class ViewPatientsPanel extends JPanel {
                 if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2) {
                     String personalHealthNumber = getPersonalHealthNumberFromRow();
                     Patient patient = patients.getPatient(personalHealthNumber);
-                    SelectedPatientDialog selectedPatient = new SelectedPatientDialog(patient);
+                    SelectedPatientWindow selectedPatient = new SelectedPatientWindow(patient);
                     selectedPatient.setVisible(true);
                 }
             }

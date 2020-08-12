@@ -108,8 +108,7 @@ public class PatientRegistrationPanel extends JPanel {
                 String lastName = lastNameTextField.getText();
 
                 if (checkValidInput(personalHealthNumber, firstName, lastName)) {
-                    Patient patient = new Patient(personalHealthNumber, firstName, lastName);
-                    patients.addPatient(patient);
+                    patients.addPatient(new Patient(personalHealthNumber, firstName, lastName));
                 }
 
                 resetTextFields();

@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 // Represents panel that displays a selected patient's medical information
-public class SelectedPatientDialog extends JDialog {
+public class SelectedPatientWindow extends JDialog {
     private static final String FAVICON = "./data/image/favicon.png";
     private static final String ROBOT_IMAGE = "./data/image/baymax.gif";
     private static final Color BACKGROUND_COLOUR = new Color(186, 221, 255);
@@ -17,7 +17,7 @@ public class SelectedPatientDialog extends JDialog {
 
     // MODIFIES: this
     // EFFECTS: constructs a selected patient dialog window
-    public SelectedPatientDialog(Patient patient) {
+    public SelectedPatientWindow(Patient patient) {
         this.patient = patient;
 
         this.setTitle("BIOSYNC - " + patient.getFirstName().toUpperCase()
