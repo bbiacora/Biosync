@@ -31,15 +31,15 @@ developing, which aims to objectivize and expedite depression diagnosis and trea
 - [x] As a user, I want to be able to **load the map of patients** from file when the program starts
 
 ## Instructions for Grader
-- You can **add** a patient by filling out the text fields in the 'Patient Registration' panel, 
+- You can **add** a patient by filling out the text fields in the `Patient Registration' panel, 
   clicking the 'Register' button, and then clicking the 'Update' button
 - You can **remove** a patient by selecting (single click) a row on the table, clicking the 'Remove' button, 
   and then clicking 'Ok' on the pop-up window  
 - You can locate my **visual components** by:
-    - running Main, or
+    - running Main (or instead, BiosyncGUI if latest commit is downloaded)
     - double clicking a row on the table
 - You can trigger my **audio component** by:
-    - selecting (single click) a table row and clicking the 'Remove' button, or
+    - selecting (single click) a table row and clicking the 'Remove' button
     - entering an invalid input* the patient registration panel then clicking the register button
 - You can **save** the state of my application by: clicking File > Save on the menu bar 
   (*The application does not automatically save changes.*)
@@ -55,4 +55,29 @@ developing, which aims to objectivize and expedite depression diagnosis and trea
 ## Phase 4: Task 2
 Chosen construct: "Make appropriate use of the Map interface somewhere in your code"
 
-The 'Patients' class of this project makes use of a HashMap to represent a collection of patients registered in the system.
+The `Patients` class of this project makes use of a HashMap to represent a collection of patients 
+registered in the system.
+
+
+## Phase 4: Task 3
+*Note: Design changes were made during Phase 3*
+
+**COUPLING**
+- `SelectedPatientWindow` displays the medical information of a selected patient to the GUI. Initially, it was 
+associated to both <br> `Patients` and `Patient`, but it did not make sense for it be associated to `Patients` 
+since it only handles a single patient's information. <br> There was too much coupling in these three classes so, 
+I removed the method that dealt with extracting a single patient fom a collection <br> of patients in 
+`SelectedPatientWindow`. Instead of passing it in with a full collection  of patients, I refactored it so 
+that `ViewPatientsPanel` <br> (the class where  `SelectedPatientWindow` is called) first extracts the selected patient, 
+and then passes that single patient to `SelectedPatientWindow`.
+
+    ![coupling_1](https://media.github.students.cs.ubc.ca/user/9769/files/2328e100-dcbe-11ea-9731-161cff4ad586)
+
+**COHESION**
+- Initially, there was a panel class which handled both the displaying of all registered patients and the registration 
+of patients, resulting in poor cohesion. <br> So, I refactored the original class and created two classes, 
+`ViewPatientsPanel` and `RegisterPatientsPanel`, that handled each job separately.
+
+- Both `ViewPatientsPanel` and `RegisterPatientsPanel`, display a popup window in response a user input, and
+an alert sound is played <br> when this happens. Both classes used to have a `playSound()` method, but to reduce 
+duplication, I created separate `SoundPlayer` class <br> which are then called by both classes to play the sound.
