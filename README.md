@@ -32,9 +32,9 @@ developing, which aims to objectivize and expedite depression diagnosis and trea
 
 ## Instructions for Grader
 - You can **add** a patient by filling out the text fields in the `Patient Registration' panel, 
-  clicking the 'Register' button, and then clicking the 'Update' button
+  <br> clicking the 'Register' button, and then clicking the 'Update' button
 - You can **remove** a patient by selecting (single click) a row on the table, clicking the 'Remove' button, 
-  and then clicking 'Ok' on the pop-up window  
+  <br> and then clicking 'Ok' on the pop-up window  
 - You can locate my **visual components** by:
     - running Main (or instead, BiosyncGUI if latest commit is downloaded)
     - double clicking a row on the table
@@ -42,7 +42,7 @@ developing, which aims to objectivize and expedite depression diagnosis and trea
     - selecting (single click) a table row and clicking the 'Remove' button
     - entering an invalid input* the patient registration panel then clicking the register button
 - You can **save** the state of my application by: clicking File > Save on the menu bar 
-  (*The application does not automatically save changes.*)
+  <br> (*The application does not automatically save changes.*)
 - Data from file is automatically **loaded** to the application when Main is ran
 
 <br>
