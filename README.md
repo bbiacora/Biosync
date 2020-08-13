@@ -64,20 +64,20 @@ registered in the system.
 
 **COUPLING**
 - `SelectedPatientWindow` displays the medical information of a selected patient to the GUI. Initially, it was 
-associated to both <br> `Patients` and `Patient`, but it did not make sense for it be associated to `Patients` 
-since it only handles a single patient's information. <br> There was too much coupling in these three classes so, 
-I removed the method that dealt with extracting a single patient fom a collection <br> of patients in 
+associated to both `Patients` and `Patient`, but it did not make sense for it be associated to `Patients` 
+since it only handles a single patient's information. There was too much coupling in these three classes so, 
+I removed the method that dealt with extracting a single patient fom a collection of patients in 
 `SelectedPatientWindow`. Instead of passing it in with a full collection  of patients, I refactored it so 
-that `ViewPatientsPanel` <br> (the class where  `SelectedPatientWindow` is called) first extracts the selected patient, 
+that `ViewPatientsPanel` (the class where  `SelectedPatientWindow` is called) first extracts the selected patient, 
 and then passes that single patient to `SelectedPatientWindow`.
 
     ![coupling_1](https://media.github.students.cs.ubc.ca/user/9769/files/2328e100-dcbe-11ea-9731-161cff4ad586)
 
 **COHESION**
 - Initially, there was a panel class which handled both the displaying of all registered patients and the registration 
-of patients, resulting in poor cohesion. <br> So, I refactored the original class and created two classes, 
+of patients, resulting in poor cohesion. So, I refactored the original class and created two classes, 
 `ViewPatientsPanel` and `RegisterPatientsPanel`, that handled each job separately.
 
 - Both `ViewPatientsPanel` and `RegisterPatientsPanel`, display a popup window in response a user input, and
-an alert sound is played <br> when this happens. Both classes used to have a `playSound()` method, but to reduce 
-duplication, I created separate `SoundPlayer` class <br> which are then called by both classes to play the sound.
+an alert sound is played when this happens. Both classes used to have a `playSound()` method, but to reduce 
+duplication, I created separate `SoundPlayer` class which are then called by both classes to play the sound.
