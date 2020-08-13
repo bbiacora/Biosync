@@ -25,6 +25,10 @@ public class BiosyncGUI extends JFrame {
 
     private Patients patients;
 
+    public static void main(String[] args) {
+        new BiosyncGUI();
+    }
+
     // MODIFIES: this
     // EFFECTS: constructs BiosyncGUI, loads patients, displays LoadingPanel
     // Reference: https://examples.javacodegeeks.com/desktop-java/swing/java-swing-boxlayout-example/

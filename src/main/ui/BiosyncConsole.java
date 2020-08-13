@@ -18,8 +18,12 @@ public class BiosyncConsole {
     private Scanner input;
     private Patients patients;
 
-    // EFFECTS: prints welcome message, loads patients from PATIENTS_FILE,
-    //          runs application
+    public static void main(String[] args) {
+        new BiosyncConsole();
+    }
+
+    // EFFECTS: prints welcome message, loads patients from PATIENTS_FILE
+    //          runs applications
     public BiosyncConsole() {
         System.out.println("WELCOME TO BIOSYNC!");
         loadPatients();
