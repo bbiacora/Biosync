@@ -15,7 +15,7 @@ and update patient medical records, as well as track patient progress.
 - [x] As a user, I want to be able to **add a medication** to patient's records*
 - [x] As a user, I want to be able to **remove a medication** from a patient's records*
 
-\* *currently, unsupported by GUI*
+\* *currently unsupported by GUI*
 
 **PHASE 2**
 - [x] As a user, I want to be able to **save collection of patients** to file
