@@ -27,7 +27,7 @@ and update patient medical records, as well as track patient progress.
 - You can **remove** a patient by selecting (single click) a row on the table, clicking the 'Remove' button, 
   <br> and then clicking 'Ok' on the pop-up window  
 - You can locate my **visual components** by:
-    - running Main (or instead, BiosyncGUI if latest commit is downloaded)
+    - running BiosyncGUI
     - double clicking a row on the table
 - You can trigger my **audio component** by:
     - selecting (single click) a table row and clicking the 'Remove' button
